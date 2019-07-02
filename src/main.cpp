@@ -18,6 +18,9 @@ const uint8_t ButtonTop3Pin = 14;
 const uint8_t ButtonTop4Pin = 15;
 AceButton Buttons[4];
 
+// Word Clock
+WordClock _wc(&strip);
+
 void setup() {
     // Avoid power problems
     delay(3000);
@@ -44,5 +47,6 @@ void loop() {
         Buttons[i].check();
     }
 
-    strip.Show();
+    _wc.Update();
+        
 }
