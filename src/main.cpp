@@ -1,52 +1,48 @@
 #include <AceButton.h>
 #include <NeoPixelAnimator.h>
 #include <NeoPixelBus.h>
-#include <WordClock.h>
+#include <Core.h>
+#include <config.h>
+#include <memory>
 
-using namespace ace_button;
+using namespace std;
 
 // Strip
-const uint16_t PixelCount = 110;
-const uint8_t PixelPin = 5;
-NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod> strip(PixelCount, PixelPin);
+shared_ptr<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>> _strip;
 
 // Buttons
-const uint8_t Num_Buttons = 4;
-const uint8_t ButtonTop1Pin = 27;
-const uint8_t ButtonTop2Pin = 13;
-const uint8_t ButtonTop3Pin = 14;
-const uint8_t ButtonTop4Pin = 15;
-AceButton Buttons[4];
+ace_button::AceButton Buttons[NUM_BUTTONS];
 
-// Word Clock
-WordClock _wc(&strip);
+// Word Clock Core
+shared_ptr<Core> _core;
 
 void setup() {
-    // Avoid power problems
-    delay(3000);
 
-    // Setup Strip
-    strip.Begin();
-    strip.Show();
+    _strip = make_shared<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>>(NUM_LEDS, LEDS_PIN);
+    _core = make_shared<Core>(_strip);
+    
+    // To avoid power problems
+    delay(2000);
+    Serial.begin(115200);
+    _strip->Begin();
 
     // Define IO
-    pinMode(ButtonTop1Pin, INPUT);
+    /*pinMode(ButtonTop1Pin, INPUT);
     Buttons[0].init(ButtonTop1Pin);
     pinMode(ButtonTop2Pin, INPUT);
     Buttons[1].init(ButtonTop2Pin);
     pinMode(ButtonTop3Pin, INPUT);
     Buttons[2].init(ButtonTop3Pin);
     pinMode(ButtonTop4Pin, INPUT);
-    Buttons[3].init(ButtonTop4Pin);
-
+    Buttons[3].init(ButtonTop4Pin);*/
 }
 
 void loop() {
 
-    for (int i = 0; i < Num_Buttons; i++) {
+    for (int i = 0; i < NUM_BUTTONS; i++) {
         Buttons[i].check();
     }
 
-    _wc.Update();
+    _core->Update();
         
 }

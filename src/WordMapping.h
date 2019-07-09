@@ -1,35 +1,38 @@
-#include <vector>
+#include <Component.h>
 #include <bitset>
+#include <vector>
 
-class WordMapping {
+#ifndef WORDMAPPING_H
+#define WORDMAPPING_H
+
+class WordMapping : Component {
    public:
     enum Word {
-        IT_S = (1 << 9) | (1 << 10) | (1 << 29),
-        GAIPS = (1 << 69) | (1 << 70) | (1 << 89) | (1 << 90) | (1 << 109),
-        TO = (1 << 93) | (1 << 106),
-        PAST = (1 << 25) | (1 << 34) | (1 << 45) | (1 << 54),
-        O_CLOCK= (1 << 59) | (1 << 60) | (1 << 79) | (1 << 80) | (1 << 99) | (1 << 100),
-        M_A_QUARTER = (1 << 28) | (1 << 48) | (1 << 51) | (1 << 68) | (1 << 71) | (1 << 88) | (1 << 91) | (1 << 108),
-        M_TWENTY = (1 << 7) | (1 << 12) | (1 << 27) | (1 << 31) | (1 << 47) | (1 << 52),
-        M_FIVE = (1 << 72) | (1 << 87) | (1 << 92) | (1 << 97),
-        M_HALF = (1 << 6) | (1 << 13) | (1 << 26) | (1 << 33),
-        M_TEN= (1 << 53) | (1 << 66) | (1 << 73) ,
-        H_ONE = (1 << 4) | (1 << 15) | (1 << 24),
-        H_TWO = (1 << 83) | (1 << 96) | (1 << 103),
-        H_THREE = (1 << 64) | (1 << 75) | (1 << 84) | (1 << 95) | (1 << 104),
-        H_FOUR = (1 << 74) | (1 << 85) | (1 << 94) | (1 << 105),
-        H_FIVE = (1 << 43) | (1 << 56) | (1 << 63) | (1 << 76),
-        H_SIX = (1 << 35) | (1 << 44) | (1 << 55),
-        H_SEVEN = (1 << 1) | (1 << 18) | (1 << 21) | (1 << 38) | (1 << 41),
-        H_EIGHT = (1 << 62) | (1 << 77) | (1 << 82) | (1 << 97) | (1 << 102),
-        H_NINE = (1 << 3) | (1 << 16) | (1 << 23) | (1 << 36),
-        H_TEN = (1 << 0) | (1 << 19) | (1 << 20),
-        H_ELEVEN = (1 << 2) | (1 << 17) | (1 << 22) | (1 << 37) | (1 << 42) | (1 << 57),
-        H_TWELVE = (1 << 58) | (1 << 61) | (1 << 78) | (1 << 81) | (1 << 98) | (1 << 101)
+        IT_S,
+        GAIPS,
+        TO,
+        PAST,
+        O_CLOCK,
+        M_A_QUARTER,
+        M_TWENTY,
+        M_FIVE,
+        M_HALF,
+        M_TEN,
+        H_ONE,
+        H_TWO,
+        H_THREE,
+        H_FOUR,
+        H_FIVE,
+        H_SIX,
+        H_SEVEN,
+        H_EIGHT,
+        H_NINE,
+        H_TEN,
+        H_ELEVEN,
+        H_TWELVE,
     };
-
-    std::vector<int> GetLeds(WordMapping::Word word);
-
-    std::vector<int> GetLeds(std::bitset<110> ledBitMask);
-
+    WordMapping(class Core* owner);
+    std::bitset<110> GetLeds(WordMapping::Word word);
 };
+
+#endif
