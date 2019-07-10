@@ -1,4 +1,6 @@
 #include <Screen.h>
+#include <bitset>
+#include <config.h>
 
 class S_WordClock : public Screen {
    public:
@@ -6,5 +8,6 @@ class S_WordClock : public Screen {
     void Update();
 
    private:
-    void GetTimeFromNTC();
+    bool _timeSet;
+    std::bitset<NUM_LEDS> ConvertTimeToLeds(struct tm time);
 };

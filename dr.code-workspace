@@ -6,7 +6,7 @@
 	],
 	"settings": {
 		"terminal.integrated.env.windows": {
-			"PATH": "C:\\Users\\Diogo Rato\\.platformio\\penv\\Scripts;C:\\Users\\Diogo Rato\\.platformio\\penv;C:\\ProgramData\\DockerDesktop\\version-bin;C:\\Program Files\\Docker\\Docker\\Resources\\bin;C:\\Program Files\\Oculus\\Support\\oculus-runtime;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\GtkSharp\\2.12\\bin;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\IBM\\SPSS\\Statistics\\25\\JRE\\bin;C:\\Program Files\\Git\\cmd;C:\\Program Files\\PuTTY\\;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\dotnet\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\Diogo Rato\\AppData\\Local\\Microsoft\\WindowsApps;;C:\\Users\\Diogo Rato\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\Diogo Rato\\AppData\\Roaming\\npm;C:\\Users\\Diogo Rato\\.dotnet\\tools;C:\\Program Files\\JetBrains\\JetBrains Rider 2019.1.1\\bin;;C:\\ProgramData\\DockerDesktop\\version-bin;C:\\Program Files\\Docker\\Docker\\Resources\\bin;C:\\Program Files\\Oculus\\Support\\oculus-runtime;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\GtkSharp\\2.12\\bin;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\IBM\\SPSS\\Statistics\\25\\JRE\\bin;C:\\Program Files\\Git\\cmd;C:\\Program Files\\PuTTY\\;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\dotnet\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\Diogo Rato\\AppData\\Local\\Microsoft\\WindowsApps;;C:\\Users\\Diogo Rato\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\Diogo Rato\\AppData\\Roaming\\npm;C:\\Users\\Diogo Rato\\.dotnet\\tools;C:\\Program Files\\JetBrains\\JetBrains Rider 2019.1.1\\bin;",
+			"PATH": "C:\\Users\\Diogo Rato\\.platformio\\penv\\Scripts;C:\\Users\\Diogo Rato\\.platformio\\penv;C:\\ProgramData\\DockerDesktop\\version-bin;C:\\Program Files\\Docker\\Docker\\Resources\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\nodejs\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Program Files\\Git\\cmd;C:\\Program Files\\dotnet\\;C:\\Users\\Diogo Rato\\AppData\\Local\\Microsoft\\WindowsApps;;C:\\Users\\Diogo Rato\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\Diogo Rato\\AppData\\Roaming\\npm;C:\\Program Files\\JetBrains\\PyCharm Community Edition 2019.1.1\\bin;;C:\\ProgramData\\DockerDesktop\\version-bin;C:\\Program Files\\Docker\\Docker\\Resources\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\nodejs\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Program Files\\Git\\cmd;C:\\Program Files\\dotnet\\;C:\\Users\\Diogo Rato\\AppData\\Local\\Microsoft\\WindowsApps;;C:\\Users\\Diogo Rato\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\Diogo Rato\\AppData\\Roaming\\npm;C:\\Program Files\\JetBrains\\PyCharm Community Edition 2019.1.1\\bin;",
 			"PLATFORMIO_CALLER": "vscode"
 		},
 		"files.associations": {
@@ -43,7 +43,8 @@
 			"utility": "cpp",
 			"map": "cpp",
 			"bitset": "cpp",
-			"memory": "cpp"
+			"memory": "cpp",
+			"cstddef": "cpp"
 		}
 	}
 }

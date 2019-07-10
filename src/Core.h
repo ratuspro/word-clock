@@ -22,6 +22,7 @@ class Core {
     std::shared_ptr<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>> _strip;
     std::vector<std::shared_ptr<Screen>> _screens;
     uint8_t _currentScreenIndex;
+    void ChangeScreen(uint8_t screenIndex);
 };
 
 #endif

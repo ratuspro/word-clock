@@ -7,13 +7,24 @@ NetworkManager::NetworkManager(Core* owner) : Component(owner) {
 }
 
 void NetworkManager::Setup() {
+    Serial.println("Started connecting to WiFi");
     WiFi.begin(NETWORK_SSID, NETWORK_PASSWORD);
-    while (WiFi.status() != WL_CONNECTED) {
-        delay(500);
-        Serial.print(".");
+
+    for(uint8_t attempt = 0; attempt < NETWORK_NUM_ATTEMPTS; attempt++){
+        Serial.print("Attempt #");
+        Serial.println(attempt);
+        if(WiFi.status() == WL_CONNECTED){
+            Serial.print("Connected to ");
+            Serial.println(NETWORK_SSID);
+            break;
+        }
+        delay(NETWORK_TIME_BETWEEN_ATTEMPTS);
     }
-    Serial.println("");
-    Serial.println("WiFi connected.");
-    Serial.println("IP address: ");
-    Serial.println(WiFi.localIP());
+
+    if(WiFi.status() != WL_CONNECTED){
+        Serial.print("Failed to connect to ");
+        Serial.print(NETWORK_SSID);
+        Serial.print(" using password ");
+        Serial.println(NETWORK_PASSWORD);
+    }
 }

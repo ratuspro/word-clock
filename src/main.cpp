@@ -18,14 +18,14 @@ shared_ptr<Core> _core;
 
 void setup() {
 
+    // To avoid power problems
+    delay(STARTUP_DELAY);
+    Serial.begin(115200);
+    
     _strip = make_shared<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>>(NUM_LEDS, LEDS_PIN);
+    _strip->Begin();
     _core = make_shared<Core>(_strip);
     
-    // To avoid power problems
-    delay(2000);
-    Serial.begin(115200);
-    _strip->Begin();
-
     // Define IO
     /*pinMode(ButtonTop1Pin, INPUT);
     Buttons[0].init(ButtonTop1Pin);
@@ -37,8 +37,10 @@ void setup() {
     Buttons[3].init(ButtonTop4Pin);*/
 }
 
-void loop() {
+RgbColor blue(0,0,255);
 
+void loop() {
+    _strip->Show();
     for (int i = 0; i < NUM_BUTTONS; i++) {
         Buttons[i].check();
     }
