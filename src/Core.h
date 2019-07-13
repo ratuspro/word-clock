@@ -11,15 +11,17 @@
 
 class Core {
    public:
-    Core(std::shared_ptr<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>> strip);
     virtual ~Core();
     void Update();
     std::shared_ptr<WordMapping> _wordMapping;
     std::shared_ptr<LedManager> _ledManager;
     std::shared_ptr<NetworkManager> _networkManager;
+    std::shared_ptr<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>> _strip;
+    static Core* getInstance();
 
    private:
-    std::shared_ptr<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>> _strip;
+    static Core* instance;
+    Core();
     std::vector<std::shared_ptr<Screen>> _screens;
     uint8_t _currentScreenIndex;
     void ChangeScreen(uint8_t screenIndex);

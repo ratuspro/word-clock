@@ -10,13 +10,12 @@
 
 class LedManager : Component{
     public:
-        LedManager(class Core* owner, std::shared_ptr<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>> strip);
+        LedManager();
         void SetPixels(std::bitset<NUM_LEDS> leds, RgbColor color);
         void SetPixels(std::vector<int> leds, RgbColor color);
         void ClearPixels(RgbColor color);
         void Update();
     private:
-        std::shared_ptr<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>> _strip;
         bool _leds_dirty;
 };
 

@@ -3,13 +3,13 @@
 #include <WiFi.h>
 #include <config.h>
 
-NetworkManager::NetworkManager(Core* owner) : Component(owner) {
+NetworkManager::NetworkManager() : Component() {
 }
 
 void NetworkManager::Setup() {
     Serial.println("Started connecting to WiFi");
     WiFi.begin(NETWORK_SSID, NETWORK_PASSWORD);
-
+    
     for(uint8_t attempt = 0; attempt < NETWORK_NUM_ATTEMPTS; attempt++){
         Serial.print("Attempt #");
         Serial.println(attempt);
@@ -21,6 +21,7 @@ void NetworkManager::Setup() {
         delay(NETWORK_TIME_BETWEEN_ATTEMPTS);
     }
 
+    Serial.println(WiFi.localIP());
     if(WiFi.status() != WL_CONNECTED){
         Serial.print("Failed to connect to ");
         Serial.print(NETWORK_SSID);

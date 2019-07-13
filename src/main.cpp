@@ -7,14 +7,11 @@
 
 using namespace std;
 
-// Strip
-shared_ptr<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>> _strip;
-
 // Buttons
 ace_button::AceButton Buttons[NUM_BUTTONS];
 
 // Word Clock Core
-shared_ptr<Core> _core;
+Core * _core;
 
 void setup() {
 
@@ -22,10 +19,8 @@ void setup() {
     delay(STARTUP_DELAY);
     Serial.begin(115200);
     
-    _strip = make_shared<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>>(NUM_LEDS, LEDS_PIN);
-    _strip->Begin();
-    _core = make_shared<Core>(_strip);
-    
+    _core = Core::getInstance();
+
     // Define IO
     /*pinMode(ButtonTop1Pin, INPUT);
     Buttons[0].init(ButtonTop1Pin);
@@ -40,7 +35,6 @@ void setup() {
 RgbColor blue(0,0,255);
 
 void loop() {
-    _strip->Show();
     for (int i = 0; i < NUM_BUTTONS; i++) {
         Buttons[i].check();
     }

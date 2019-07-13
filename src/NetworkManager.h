@@ -6,7 +6,7 @@
 
 class NetworkManager : Component {
    public:
-    NetworkManager(class Core* core);
+    NetworkManager();
     void Setup();
 };
 

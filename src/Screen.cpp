@@ -1,7 +1,7 @@
 #include <Core.h>
 #include <Screen.h>
 
-Screen::Screen(Core* core) : Component(core) {
+Screen::Screen() : Component() {
     _currentState = State::STOPPED;
 }
 

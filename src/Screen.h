@@ -4,12 +4,11 @@
 class Screen : Component {
    public:
     enum State { RUNNING, STOPPED };
-    Screen(class Core* core);
+    Screen();
     virtual void Update() = 0;
     void Stop();
     void Run();
     State _currentState;
-    protected:
-     class Core* _owner;
+    class Core* _owner;
 };
 #endif

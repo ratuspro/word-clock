@@ -6,34 +6,38 @@
 RgbColor red(255, 0, 0);
 RgbColor black(0, 0, 0);
 
-S_WordClock::S_WordClock(Core* owner) : Screen(owner) { _timeSet = false; }
+S_WordClock::S_WordClock() : Screen() {
+    _timeSet = false;
+    _udp = std::unique_ptr<WiFiUDP>(new  WiFiUDP());
+    _client = std::unique_ptr<NTPClient>(new NTPClient(*_udp));
+}
 
 void S_WordClock::Update() {
     if (_currentState == Screen::State::RUNNING) {
         if (!_timeSet) {
-            configTime(TIME_GMT_OFFSET, TIME_DAYLIGHT_OFFSET, TIME_NTP_SERVER);
+            Serial.println("Time not defined.");
+            Serial.println("Starting NTPClient...");
+            _client->begin();
+            _client->setTimeOffset(TIME_GMT_OFFSET);
+            while (!_client->update()) {
+                _client->forceUpdate();
+            }
+            Serial.println("Retrived time from NTP server");
+            Serial.println("Current time: " + _client->getFormattedTime());
             _timeSet = true;
         } else {
-            struct tm timeinfo;
-            if (!getLocalTime(&timeinfo)) {
-                Serial.println("Failed to obtain time");
-                _timeSet = false;
-                return;
-            } else {
-                _owner->_ledManager->ClearPixels(black);
-                _owner->_ledManager->SetPixels(ConvertTimeToLeds(timeinfo),
-                                               red);
-            }
+            Core::getInstance()->_ledManager->ClearPixels(black);
+            Core::getInstance()->_ledManager->SetPixels(S_WordClock::ConvertTimeToLeds(_client->getHours(), _client->getMinutes()), red);
         }
     }
 }
 
-std::bitset<NUM_LEDS> S_WordClock::ConvertTimeToLeds(struct tm time) {
+std::bitset<NUM_LEDS> S_WordClock::ConvertTimeToLeds(int hours, int minutes) {
     std::vector<WordMapping::Word> words;
 
     words.push_back(WordMapping::IT_S);
 
-    int hour = time.tm_hour % 12;
+    int hour = hours % 12;
     switch (hour) {
         case 0:
             words.push_back(WordMapping::H_TWELVE);
@@ -76,41 +80,41 @@ std::bitset<NUM_LEDS> S_WordClock::ConvertTimeToLeds(struct tm time) {
     }
 
     // Minutes
-    if (time.tm_min >= 0 && time.tm_min < 5) {
+    if (minutes >= 0 && minutes < 5) {
         words.push_back(WordMapping::O_CLOCK);
-    } else if (time.tm_min >= 5 && time.tm_min < 10) {
+    } else if (minutes >= 5 && minutes < 10) {
         words.push_back(WordMapping::M_FIVE);
         words.push_back(WordMapping::PAST);
-    } else if (time.tm_min >= 10 && time.tm_min < 15) {
+    } else if (minutes >= 10 && minutes < 15) {
         words.push_back(WordMapping::M_TEN);
         words.push_back(WordMapping::PAST);
-    } else if (time.tm_min >= 15 && time.tm_min < 20) {
+    } else if (minutes >= 15 && minutes < 20) {
         words.push_back(WordMapping::M_A_QUARTER);
         words.push_back(WordMapping::PAST);
-    } else if (time.tm_min >= 20 && time.tm_min < 25) {
+    } else if (minutes >= 20 && minutes < 25) {
         words.push_back(WordMapping::M_TWENTY);
         words.push_back(WordMapping::PAST);
-    } else if (time.tm_min >= 25 && time.tm_min < 30) {
+    } else if (minutes >= 25 && minutes < 30) {
         words.push_back(WordMapping::M_TWENTY);
         words.push_back(WordMapping::M_FIVE);
         words.push_back(WordMapping::PAST);
-    } else if (time.tm_min >= 30 && time.tm_min < 35) {
+    } else if (minutes >= 30 && minutes < 35) {
         words.push_back(WordMapping::M_HALF);
         words.push_back(WordMapping::PAST);
-    } else if (time.tm_min >= 35 && time.tm_min < 40) {
+    } else if (minutes >= 35 && minutes < 40) {
         words.push_back(WordMapping::M_TWENTY);
         words.push_back(WordMapping::M_FIVE);
         words.push_back(WordMapping::TO);
-    } else if (time.tm_min >= 40 && time.tm_min < 45) {
+    } else if (minutes >= 40 && minutes < 45) {
         words.push_back(WordMapping::M_TWENTY);
         words.push_back(WordMapping::TO);
-    } else if (time.tm_min >= 45 && time.tm_min < 50) {
+    } else if (minutes >= 45 && minutes < 50) {
         words.push_back(WordMapping::M_A_QUARTER);
         words.push_back(WordMapping::TO);
-    } else if (time.tm_min >= 50 && time.tm_min < 55) {
+    } else if (minutes >= 50 && minutes < 55) {
         words.push_back(WordMapping::M_TEN);
         words.push_back(WordMapping::TO);
-    } else if (time.tm_min >= 55 && time.tm_min < 60) {
+    } else if (minutes >= 55 && minutes < 60) {
         words.push_back(WordMapping::M_FIVE);
         words.push_back(WordMapping::TO);
     }

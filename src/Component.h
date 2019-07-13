@@ -4,10 +4,8 @@
 #define COMPONENT_H
 
 class Component {
-   protected:
-    class Core* _owner;
    public:
-    Component(class Core* core);
+    Component();
 };
 
 #endif

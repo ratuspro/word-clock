@@ -31,7 +31,7 @@ class WordMapping : Component {
         H_ELEVEN,
         H_TWELVE,
     };
-    WordMapping(class Core* owner);
+    WordMapping();
     std::bitset<110> GetLeds(WordMapping::Word word);
 };
 
