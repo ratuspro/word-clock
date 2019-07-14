@@ -1,15 +1,15 @@
 #include <Core.h>
-#include <LedManager.h>
+#include <C_LedManager.h>
 #include <S_WordClock.h>
 #include <Screen.h>
-#include <WordMapping.h>
+#include <C_WordMapping.h>
 #include <config.h>
 #include <vector>
 
 Core* Core::instance = 0;
 
-Core* Core::getInstance(){
-    if(instance == 0){
+Core* Core::getInstance() {
+    if (instance == 0) {
         instance = new Core();
     }
     return instance;
@@ -17,7 +17,8 @@ Core* Core::getInstance(){
 
 // Constructor
 Core::Core() {
-    _strip = std::make_shared<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>>(NUM_LEDS, LEDS_PIN);
+    _strip = std::make_shared<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>>(
+        NUM_LEDS, LEDS_PIN);
     _strip->Begin();
 
     // Add Word Mapping
@@ -39,7 +40,6 @@ Core::Core() {
 Core::~Core() {}
 
 void Core::Update() {
-
     // Update Current Screen
     Serial.println("Updating current screen" + _currentScreenIndex);
     _screens[_currentScreenIndex]->Update();
@@ -49,10 +49,10 @@ void Core::Update() {
     _ledManager->Update();
 
     // Wait
-    delay(1000/ FRAME_RATE);
+    delay(1000 / FRAME_RATE);
 }
 
-void Core::ChangeScreen(uint8_t screenIndex){
+void Core::ChangeScreen(uint8_t screenIndex) {
     _currentScreenIndex = screenIndex;
     _screens[_currentScreenIndex]->Run();
 }

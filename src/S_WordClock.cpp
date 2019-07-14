@@ -1,7 +1,7 @@
 #include <Core.h>
 #include <S_WordClock.h>
 #include <config.h>
-#include "time.h"
+#include <time.h>
 
 RgbColor red(255, 0, 0);
 RgbColor black(0, 0, 0);

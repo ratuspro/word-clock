@@ -1,8 +1,8 @@
-#include <LedManager.h>
 #include <NeoPixelBus.h>
-#include <NetworkManager.h>
+#include <C_LedManager.h>
+#include <C_NetworkManager.h>
+#include <C_WordMapping.h>
 #include <Screen.h>
-#include <WordMapping.h>
 #include <memory>
 #include <vector>
 

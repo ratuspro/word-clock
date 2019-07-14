@@ -1,5 +1,5 @@
 #include <Core.h>
-#include <NetworkManager.h>
+#include <C_NetworkManager.h>
 #include <WiFi.h>
 #include <config.h>
 
