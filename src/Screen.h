@@ -9,6 +9,5 @@ class Screen : Component {
     void Stop();
     void Run();
     State _currentState;
-    class Core* _owner;
 };
 #endif

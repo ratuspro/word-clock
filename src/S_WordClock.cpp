@@ -8,7 +8,7 @@ RgbColor black(0, 0, 0);
 
 S_WordClock::S_WordClock() : Screen() {
     _timeSet = false;
-    _udp = std::unique_ptr<WiFiUDP>(new  WiFiUDP());
+    _udp = std::unique_ptr<WiFiUDP>(new WiFiUDP());
     _client = std::unique_ptr<NTPClient>(new NTPClient(*_udp));
 }
 
@@ -24,10 +24,21 @@ void S_WordClock::Update() {
             }
             Serial.println("Retrived time from NTP server");
             Serial.println("Current time: " + _client->getFormattedTime());
+            int epoch_time = _client->getEpochTime();
+            timeval epoch = {epoch_time, 0};
+            const timeval *tv = &epoch;
+            timezone utc = {0, 0};
+            const timezone *tz = &utc;
+            settimeofday(tv, tz);
             _timeSet = true;
+            _client->end();
         } else {
+            struct tm now;
+            getLocalTime(&now, 0);
             Core::getInstance()->_ledManager->ClearPixels(black);
-            Core::getInstance()->_ledManager->SetPixels(S_WordClock::ConvertTimeToLeds(_client->getHours(), _client->getMinutes()), red);
+            std::bitset<NUM_LEDS> currentTimeLeds =
+                S_WordClock::ConvertTimeToLeds(now.tm_hour, now.tm_min);
+            Core::getInstance()->_ledManager->SetPixels(currentTimeLeds, red);
         }
     }
 }
@@ -37,6 +48,9 @@ std::bitset<NUM_LEDS> S_WordClock::ConvertTimeToLeds(int hours, int minutes) {
 
     words.push_back(WordMapping::IT_S);
 
+    if (minutes > 30) {
+        hours++;
+    }
     int hour = hours % 12;
     switch (hour) {
         case 0:
@@ -122,7 +136,7 @@ std::bitset<NUM_LEDS> S_WordClock::ConvertTimeToLeds(int hours, int minutes) {
     std::bitset<NUM_LEDS> leds;
     // Convert words to leds
     for (WordMapping::Word word : words) {
-        leds |= _owner->_wordMapping->GetLeds(word);
+        leds |= Core::getInstance()->_wordMapping->GetLeds(word);
     }
 
     return leds;

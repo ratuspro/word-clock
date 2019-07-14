@@ -49,7 +49,7 @@ void Core::Update() {
     _ledManager->Update();
 
     // Wait
-    //delay(1000/ FRAME_RATE);
+    delay(1000/ FRAME_RATE);
 }
 
 void Core::ChangeScreen(uint8_t screenIndex){
