@@ -1,8 +1,8 @@
-#include <Screen.h>
-#include <bitset>
-#include <config.h>
 #include <NTPClient.h>
+#include <Screen.h>
 #include <WiFiUdp.h>
+#include <config.h>
+#include <bitset>
 #include <memory>
 
 class S_WordClock : public Screen {
@@ -15,5 +15,4 @@ class S_WordClock : public Screen {
     std::bitset<NUM_LEDS> ConvertTimeToLeds(int hours, int minutes);
     std::unique_ptr<NTPClient> _client;
     std::unique_ptr<WiFiUDP> _udp;
-
 };
