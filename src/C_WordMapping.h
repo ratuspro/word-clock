@@ -1,6 +1,7 @@
 #include <Component.h>
 #include <bitset>
 #include <vector>
+#include <config.h>
 
 #ifndef WORDMAPPING_H
 #define WORDMAPPING_H
@@ -32,7 +33,8 @@ class WordMapping : Component {
         H_TWELVE,
     };
     WordMapping();
-    std::bitset<110> GetLeds(WordMapping::Word word);
+    std::bitset<NUM_LEDS> GetLeds(WordMapping::Word word);
+    std::bitset<NUM_LEDS> GetLeds(uint_fast8_t number);
 };
 
 #endif

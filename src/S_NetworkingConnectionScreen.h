@@ -6,6 +6,6 @@ class S_NetworkingConnectionScreen : public Screen {
 
    private:
     bool TryConnection();
-    int _attempts;
+    int _attempts = 1;
     clock_t _lastAttempt = clock();
 };
