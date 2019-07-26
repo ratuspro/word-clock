@@ -15,6 +15,7 @@ class LedManager : Component{
         void SetPixels(std::vector<int> leds, RgbColor color);
         void ClearPixels(RgbColor color);
         void Update();
+        std::shared_ptr<RgbColor> GetColorFromEEPROM();
     private:
         bool _leds_dirty;
 };

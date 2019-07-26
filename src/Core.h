@@ -4,6 +4,7 @@
 #include <Screen.h>
 #include <memory>
 #include <vector>
+#include <C_NetworkManager.h>
 
 #ifndef CORE_H
 #define CORE_H
@@ -15,6 +16,7 @@ class Core {
     void MoveToScreen(std::shared_ptr<Screen> nextScreen);
     std::shared_ptr<WordMapping> _wordMapping;
     std::shared_ptr<LedManager> _ledManager;
+    std::shared_ptr<C_NetworkManager> _networkManager;
     std::shared_ptr<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>> _strip;
     static Core* getInstance();
    private:

@@ -1,46 +1,21 @@
 #include <Core.h>
 #include <S_WordClock.h>
+#include <WiFi.h>
 #include <config.h>
 #include <time.h>
-#include <WiFi.h>
 
-RgbColor red(255, 0, 0);
 RgbColor black(0, 0, 0);
-
-S_WordClock::S_WordClock() : Screen() {
-    _timeSet = false;
-    _udp = std::unique_ptr<WiFiUDP>(new WiFiUDP());
-    _client = std::unique_ptr<NTPClient>(new NTPClient(*_udp));
-}
 
 void S_WordClock::Update() {
     if (_currentState == Screen::State::RUNNING) {
-        if (!_timeSet) {
-            Serial.println("Time not defined.");
-            Serial.println("Starting NTPClient...");
-            _client->begin();
-            _client->setTimeOffset(TIME_GMT_OFFSET);
-            while (!_client->update()) {
-                _client->forceUpdate();
-            }
-            Serial.println("Retrived time from NTP server");
-            Serial.println("Current time: " + _client->getFormattedTime());
-            int epoch_time = _client->getEpochTime();
-            timeval epoch = {epoch_time, 0};
-            const timeval *tv = &epoch;
-            timezone utc = {0, 0};
-            const timezone *tz = &utc;
-            settimeofday(tv, tz);
-            _timeSet = true;
-            _client->end();
-        } else {
-            struct tm now;
-            getLocalTime(&now, 0);
-            Core::getInstance()->_ledManager->ClearPixels(black);
-            std::bitset<NUM_LEDS> currentTimeLeds =
-                S_WordClock::ConvertTimeToLeds(now.tm_hour, now.tm_min);
-            Core::getInstance()->_ledManager->SetPixels(currentTimeLeds, red);
-        }
+        struct tm now;
+        getLocalTime(&now, 0);
+        Core::getInstance()->_ledManager->ClearPixels(black);
+        std::bitset<NUM_LEDS> currentTimeLeds =
+            S_WordClock::ConvertTimeToLeds(now.tm_hour, now.tm_min);
+        Core::getInstance()->_ledManager->SetPixels(
+            currentTimeLeds,
+            *Core::getInstance()->_ledManager->GetColorFromEEPROM());
     }
 }
 
