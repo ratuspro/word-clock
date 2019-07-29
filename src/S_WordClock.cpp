@@ -112,7 +112,7 @@ std::bitset<NUM_LEDS> S_WordClock::ConvertTimeToLeds(int hours, int minutes) {
     std::bitset<NUM_LEDS> leds;
     // Convert words to leds
     for (C_WordManager::Word word : words) {
-        leds |= Core::getInstance()->_C_WordManager->GetLeds(word);
+        leds |= Core::getInstance()->_wordManager->GetLeds(word);
     }
 
     return leds;

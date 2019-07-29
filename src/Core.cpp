@@ -40,7 +40,7 @@ Core::Core() {
     _inputManager->AddButton(C_InputManager::ButtonName::CONFIRM, BUTTON3_PIN);
     
     // Add Word Mapping
-    _C_WordManager = std::make_shared<C_WordManager>();
+    _wordManager = std::make_shared<C_WordManager>();
 
     // Add Word Led Manager
     _ledManager = std::make_shared<LedManager>();

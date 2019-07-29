@@ -73,7 +73,7 @@ void S_StartingScreen::Update() {
 void S_StartingScreen::UpdateAnimation() {
     // If no word is defined, select GAIPS
     if (_word.count() == 0) {
-        _word = Core::getInstance()->_C_WordManager->GetLeds(C_WordManager::GAIPS);
+        _word = Core::getInstance()->_wordManager->GetLeds(C_WordManager::GAIPS);
         _initialColor = std::make_shared<RgbColor>(0, 0, 0);
         _targetColor = Core::getInstance()->_ledManager->GetColorFromEEPROM();
     }

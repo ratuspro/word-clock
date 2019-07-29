@@ -16,7 +16,7 @@ class Core {
     virtual ~Core();
     void Update();
     void MoveToScreen(std::shared_ptr<Screen> nextScreen);
-    std::shared_ptr<C_WordManager> _C_WordManager;
+    std::shared_ptr<C_WordManager> _wordManager;
     std::shared_ptr<LedManager> _ledManager;
     std::shared_ptr<C_NetworkManager> _networkManager;
     std::shared_ptr<C_InputManager> _inputManager;
