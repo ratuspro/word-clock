@@ -6,9 +6,10 @@
 #define NUM_BUTTONS 4
 #define LEDS_PIN    5
 #define BUTTON1_PIN 27
-#define BUTTON2_PIN 13
-#define BUTTON3_PIN 14
-#define BUTTON4_PIN 15
+#define BUTTON2_PIN 14
+#define BUTTON3_PIN 12
+#define BUTTON4_PIN 13
+#define DEBOUNCE_INTERVAL 25
 #define STARTUP_DELAY 3000
 
 // NETWORKING

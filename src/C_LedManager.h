@@ -11,7 +11,9 @@
 class LedManager : Component{
     public:
         LedManager();
+        void SetPixels(std::bitset<NUM_LEDS> leds);
         void SetPixels(std::bitset<NUM_LEDS> leds, RgbColor color);
+        void SetPixels(std::vector<int> leds);
         void SetPixels(std::vector<int> leds, RgbColor color);
         void ClearPixels(RgbColor color);
         void Update();

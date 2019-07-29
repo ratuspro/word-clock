@@ -21,15 +21,24 @@ Core* Core::getInstance() {
 // Constructor
 Core::Core() {
 
+    // Init EEPROM 
     if (!EEPROM.begin(EEPROM_SIZE)) {
         Serial.println("failed to initialise EEPROM");
         ESP.restart();
     }
 
+    // Init Strip
     _strip = std::make_shared<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>>(
         NUM_LEDS, LEDS_PIN);
     _strip->Begin();
 
+    // Init Buttons
+    _inputManager = std::make_shared<C_InputManager>();
+    _inputManager->AddButton(C_InputManager::ButtonName::MENU, BUTTON4_PIN);
+    _inputManager->AddButton(C_InputManager::ButtonName::UP, BUTTON1_PIN);
+    _inputManager->AddButton(C_InputManager::ButtonName::DOWN, BUTTON2_PIN);
+    _inputManager->AddButton(C_InputManager::ButtonName::CONFIRM, BUTTON3_PIN);
+    
     // Add Word Mapping
     _wordMapping = std::make_shared<WordMapping>();
 
@@ -39,7 +48,9 @@ Core::Core() {
     // Add network Manager
     _networkManager = std::make_shared<C_NetworkManager>();
 
+    // Start Screen
     Core::MoveToScreen(std::make_shared<S_StartingScreen>());
+
 }
 
 Core::~Core() {}
@@ -47,6 +58,7 @@ Core::~Core() {}
 void Core::Update() {
     _currentScreen->Update();
     _ledManager->Update();
+    _inputManager->Update();
     delay(1000 / FRAME_RATE);
 }
 

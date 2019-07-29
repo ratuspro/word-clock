@@ -5,6 +5,10 @@
 
 LedManager::LedManager() : Component() { _leds_dirty = true; }
 
+void LedManager::SetPixels(std::bitset<NUM_LEDS> leds) {
+    SetPixels(leds, *GetColorFromEEPROM());
+}
+
 void LedManager::SetPixels(std::bitset<NUM_LEDS> leds, RgbColor color) {
     std::vector<int> pixels;
     for (int i = 0; i < leds.size(); i++) {
@@ -13,6 +17,10 @@ void LedManager::SetPixels(std::bitset<NUM_LEDS> leds, RgbColor color) {
         }
     }
     LedManager::SetPixels(pixels, color);
+}
+
+void LedManager::SetPixels(std::vector<int> leds) {
+    SetPixels(leds, *GetColorFromEEPROM());
 }
 
 void LedManager::SetPixels(std::vector<int> leds, RgbColor color) {

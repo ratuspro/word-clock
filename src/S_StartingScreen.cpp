@@ -5,10 +5,10 @@
 #include <S_ClockConfiguration.h>
 #include <S_StartingScreen.h>
 #include <S_WordClock.h>
+#include <WiFi.h>
 #include <WiFiUdp.h>
 #include <sys/time.h>
 #include <memory>
-#include<WiFi.h>
 S_StartingScreen::S_StartingScreen() {
     // Animation
     _numberOfFades = 0;
@@ -20,6 +20,12 @@ S_StartingScreen::S_StartingScreen() {
 }
 
 void S_StartingScreen::Update() {
+    // Ignore network connection
+    if (Core::getInstance()->_inputManager->GetKeyDown(C_InputManager::MENU)) {
+        Core::getInstance()->MoveToScreen(
+            std::make_shared<S_ClockConfiguration>());
+    }
+
     // Handle Animation
     UpdateAnimation();
 
@@ -70,7 +76,6 @@ void S_StartingScreen::UpdateAnimation() {
         _word = Core::getInstance()->_wordMapping->GetLeds(WordMapping::GAIPS);
         _initialColor = std::make_shared<RgbColor>(0, 0, 0);
         _targetColor = Core::getInstance()->_ledManager->GetColorFromEEPROM();
-        Serial.println(_targetColor->B);
     }
 
     // Manage Animation
