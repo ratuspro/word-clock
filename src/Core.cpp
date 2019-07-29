@@ -48,6 +48,9 @@ Core::Core() {
     // Add network Manager
     _networkManager = std::make_shared<C_NetworkManager>();
 
+    // Add Icon Manager
+    _iconManager = std::make_shared<C_IconManager>();
+
     // Start Screen
     Core::MoveToScreen(std::make_shared<S_StartingScreen>());
 

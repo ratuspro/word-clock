@@ -6,6 +6,7 @@
 #include <vector>
 #include <C_NetworkManager.h>
 #include <C_InputManager.h>
+#include <C_IconManager.h>
 
 #ifndef CORE_H
 #define CORE_H
@@ -19,6 +20,7 @@ class Core {
     std::shared_ptr<LedManager> _ledManager;
     std::shared_ptr<C_NetworkManager> _networkManager;
     std::shared_ptr<C_InputManager> _inputManager;
+    std::shared_ptr<C_IconManager> _iconManager;
     std::shared_ptr<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>> _strip;
     static Core* getInstance();
    private:
