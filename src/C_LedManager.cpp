@@ -47,6 +47,36 @@ std::shared_ptr<RgbColor> LedManager::GetColorFromEEPROM() {
     EEPROM.readInt(EEPROM_ADDRESS_COLOR_G);
     EEPROM.readInt(EEPROM_ADDRESS_COLOR_B);
     return std::make_shared<RgbColor>(EEPROM.readInt(EEPROM_ADDRESS_COLOR_R),
-                    EEPROM.readInt(EEPROM_ADDRESS_COLOR_G),
-                    EEPROM.readInt(EEPROM_ADDRESS_COLOR_B));
+                                      EEPROM.readInt(EEPROM_ADDRESS_COLOR_G),
+                                      EEPROM.readInt(EEPROM_ADDRESS_COLOR_B));
+}
+
+std::bitset<NUM_LEDS> LedManager::ConvertFromScreenToBitSet(bool screen[SCREEN_WIDTH][SCREEN_HEIGHT]) {
+    std::bitset<NUM_LEDS> _screen;
+    for (uint8_t x = 0; x < SCREEN_WIDTH; x++) {
+        for (uint8_t y = 0; y < SCREEN_HEIGHT; y++) {
+            if(x%2 == 0){
+                _screen[x*10 + y] = screen[x][y];
+            }else{
+                _screen[(x+1)*10 -(y+1)] = screen[x][y];
+            }
+            //TODO: Can be optimized to one single expression
+        }
+    }
+    return _screen;
+}
+
+std::bitset<NUM_LEDS> LedManager::CreateScreen(uint8_t deltaX, uint8_t deltaY, bool **frame, uint8_t width, uint8_t height) {
+    std::bitset<NUM_LEDS> _screen;
+
+    bool screen[SCREEN_WIDTH][SCREEN_HEIGHT];
+    for (uint8_t x = 0; x < width; x++) {
+        for (uint8_t y = 0; y < height; y++) {
+            if (x >= 0 && x < SCREEN_WIDTH && y >= 0 && y < SCREEN_HEIGHT) {
+                screen[deltaX + x][deltaY + y] = frame[x][y];
+            }
+        }
+    }
+
+    return ConvertFromScreenToBitSet(screen);
 }

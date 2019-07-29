@@ -1,8 +1,12 @@
 
 #pragma once 
 
-// HARDWARE
+// SCREEN
 #define NUM_LEDS  110
+#define SCREEN_WIDTH 11
+#define SCREEN_HEIGHT 10
+
+// HARDWARE
 #define NUM_BUTTONS 4
 #define LEDS_PIN    5
 #define BUTTON1_PIN 27

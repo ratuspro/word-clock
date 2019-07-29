@@ -18,6 +18,8 @@ class LedManager : Component{
         void ClearPixels(RgbColor color);
         void Update();
         std::shared_ptr<RgbColor> GetColorFromEEPROM();
+        std::bitset<NUM_LEDS> ConvertFromScreenToBitSet(bool screen[SCREEN_WIDTH][SCREEN_HEIGHT]);
+        std::bitset<NUM_LEDS> CreateScreen(uint8_t deltaX, uint8_t deltaY, bool **frame, uint8_t width, uint8_t height);
     private:
         bool _leds_dirty;
 };
