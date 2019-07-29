@@ -5,7 +5,7 @@
 
 class Icon{
     public:
-        bool **_frame;
+        std::vector<std::vector<bool>> _frame;
 };
 
 #endif
