@@ -1,4 +1,4 @@
-#include <C_WordMapping.h>
+#include <C_WordManager.h>
 #include <Core.h>
 #include <NeoPixelBus.h>
 #include <map>
@@ -72,86 +72,113 @@ static const std::string LEDS_H_TWELVE =
     "00000000100100000000000000001001000000000000000010010000000000000000000000"
     "000000000000000000000000000000000000";
 
-WordMapping::WordMapping() : Component() {}
+C_WordManager::C_WordManager() : Component() {}
 
-std::bitset<NUM_LEDS> WordMapping::GetLeds(uint_fast8_t number) {
+std::bitset<NUM_LEDS> C_WordManager::GetLeds(uint_fast8_t number) {
     switch (number) {
         case 1:
-            return WordMapping::GetLeds(Word::H_ONE);
+            return C_WordManager::GetLeds(Word::H_ONE);
         case 2:
-            return WordMapping::GetLeds(Word::H_TWO);
+            return C_WordManager::GetLeds(Word::H_TWO);
         case 3:
-            return WordMapping::GetLeds(Word::H_THREE);
+            return C_WordManager::GetLeds(Word::H_THREE);
         case 4:
-            return WordMapping::GetLeds(Word::H_FOUR);
+            return C_WordManager::GetLeds(Word::H_FOUR);
         case 5:
-            return WordMapping::GetLeds(Word::H_FIVE);
+            return C_WordManager::GetLeds(Word::H_FIVE);
         case 6:
-            return WordMapping::GetLeds(Word::H_SIX);
+            return C_WordManager::GetLeds(Word::H_SIX);
         case 7:
-            return WordMapping::GetLeds(Word::H_SEVEN);
+            return C_WordManager::GetLeds(Word::H_SEVEN);
         case 8:
-            return WordMapping::GetLeds(Word::H_EIGHT);
+            return C_WordManager::GetLeds(Word::H_EIGHT);
         case 9:
-            return WordMapping::GetLeds(Word::H_NINE);
+            return C_WordManager::GetLeds(Word::H_NINE);
         case 10:
-            return WordMapping::GetLeds(Word::H_TEN);
+            return C_WordManager::GetLeds(Word::H_TEN);
         case 11:
-            return WordMapping::GetLeds(Word::H_ELEVEN);
+            return C_WordManager::GetLeds(Word::H_ELEVEN);
         case 12:
-            return WordMapping::GetLeds(Word::H_TWELVE);
+            return C_WordManager::GetLeds(Word::H_TWELVE);
         default:
             return std::bitset<NUM_LEDS>();
     }
 }
 
-std::bitset<NUM_LEDS> WordMapping::GetLeds(WordMapping::Word word) {
+std::bitset<NUM_LEDS> C_WordManager::GetLeds(C_WordManager::Word word) {
     switch (word) {
-        case WordMapping::Word::GAIPS:
+        case C_WordManager::Word::GAIPS:
             return std::bitset<NUM_LEDS>(LEDS_GAIPS);
-        case WordMapping::Word::IT_S:
+        case C_WordManager::Word::IT_S:
             return std::bitset<NUM_LEDS>(LEDS_IT_S);
-        case WordMapping::Word::TO:
+        case C_WordManager::Word::TO:
             return std::bitset<NUM_LEDS>(LEDS_TO);
-        case WordMapping::Word::PAST:
+        case C_WordManager::Word::PAST:
             return std::bitset<NUM_LEDS>(LEDS_PAST);
-        case WordMapping::Word::O_CLOCK:
+        case C_WordManager::Word::O_CLOCK:
             return std::bitset<NUM_LEDS>(LEDS_O_CLOCK);
-        case WordMapping::Word::M_A_QUARTER:
+        case C_WordManager::Word::M_A_QUARTER:
             return std::bitset<NUM_LEDS>(LEDS_M_A_QUARTER);
-        case WordMapping::Word::M_TWENTY:
+        case C_WordManager::Word::M_TWENTY:
             return std::bitset<NUM_LEDS>(LEDS_M_TWENTY);
-        case WordMapping::Word::M_FIVE:
+        case C_WordManager::Word::M_FIVE:
             return std::bitset<NUM_LEDS>(LEDS_M_FIVE);
-        case WordMapping::Word::M_HALF:
+        case C_WordManager::Word::M_HALF:
             return std::bitset<NUM_LEDS>(LEDS_M_HALF);
-        case WordMapping::Word::M_TEN:
+        case C_WordManager::Word::M_TEN:
             return std::bitset<NUM_LEDS>(LEDS_M_TEN);
-        case WordMapping::Word::H_ONE:
+        case C_WordManager::Word::H_ONE:
             return std::bitset<NUM_LEDS>(LEDS_H_ONE);
-        case WordMapping::Word::H_TWO:
+        case C_WordManager::Word::H_TWO:
             return std::bitset<NUM_LEDS>(LEDS_H_TWO);
-        case WordMapping::Word::H_THREE:
+        case C_WordManager::Word::H_THREE:
             return std::bitset<NUM_LEDS>(LEDS_H_THREE);
-        case WordMapping::Word::H_FOUR:
+        case C_WordManager::Word::H_FOUR:
             return std::bitset<NUM_LEDS>(LEDS_H_FOUR);
-        case WordMapping::Word::H_FIVE:
+        case C_WordManager::Word::H_FIVE:
             return std::bitset<NUM_LEDS>(LEDS_H_FIVE);
-        case WordMapping::Word::H_SIX:
+        case C_WordManager::Word::H_SIX:
             return std::bitset<NUM_LEDS>(LEDS_H_SIX);
-        case WordMapping::Word::H_SEVEN:
+        case C_WordManager::Word::H_SEVEN:
             return std::bitset<NUM_LEDS>(LEDS_H_SEVEN);
-        case WordMapping::Word::H_EIGHT:
+        case C_WordManager::Word::H_EIGHT:
             return std::bitset<NUM_LEDS>(LEDS_H_EIGHT);
-        case WordMapping::Word::H_NINE:
+        case C_WordManager::Word::H_NINE:
             return std::bitset<NUM_LEDS>(LEDS_H_NINE);
-        case WordMapping::Word::H_TEN:
+        case C_WordManager::Word::H_TEN:
             return std::bitset<NUM_LEDS>(LEDS_H_TEN);
-        case WordMapping::Word::H_ELEVEN:
+        case C_WordManager::Word::H_ELEVEN:
             return std::bitset<NUM_LEDS>(LEDS_H_ELEVEN);
-        case WordMapping::Word::H_TWELVE:
+        case C_WordManager::Word::H_TWELVE:
             return std::bitset<NUM_LEDS>(LEDS_H_TWELVE);
         default:
             return std::bitset<NUM_LEDS>(0);
     }
+}
+
+std::vector<std::vector<bool>> C_WordManager::GetPixelsForLetter(char letter){
+
+}
+
+std::vector<std::vector<bool>> C_WordManager::GetPixelsForText(std::string text){
+
+    std::vector<std::vector<bool>> textInPixels;
+
+    //Create Word Pixels
+    uint8_t currentLetter = 0;
+    uint8_t currentX = 0;
+    
+    //For each letter on the text, copy it to word pixels
+    for (std::string::iterator it = text.begin(); it != text.end(); it++) {
+        std::vector<std::vector<bool>> letter = GetPixelsForLetter(*it);
+        for (uint8_t x = currentX; x < letter.size(); x++){
+            textInPixels[x].resize(letter[x].size());
+            for (uint8_t y = 0; y < letter[x].size(); y++){
+                textInPixels[x][y] = letter[x][y]; 
+            }
+        }
+        currentX = currentX + LETTER_WIDTH + LETTER_SPACING;
+    }
+
+    return textInPixels;
 }

@@ -1,5 +1,5 @@
 #include <C_LedManager.h>
-#include <C_WordMapping.h>
+#include <C_WordManager.h>
 #include <NeoPixelBus.h>
 #include <Screen.h>
 #include <memory>
@@ -15,7 +15,7 @@ class Core {
     virtual ~Core();
     void Update();
     void MoveToScreen(std::shared_ptr<Screen> nextScreen);
-    std::shared_ptr<WordMapping> _wordMapping;
+    std::shared_ptr<C_WordManager> _C_WordManager;
     std::shared_ptr<LedManager> _ledManager;
     std::shared_ptr<C_NetworkManager> _networkManager;
     std::shared_ptr<C_InputManager> _inputManager;

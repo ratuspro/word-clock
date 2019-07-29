@@ -20,9 +20,9 @@ void S_WordClock::Update() {
 }
 
 std::bitset<NUM_LEDS> S_WordClock::ConvertTimeToLeds(int hours, int minutes) {
-    std::vector<WordMapping::Word> words;
+    std::vector<C_WordManager::Word> words;
 
-    words.push_back(WordMapping::IT_S);
+    words.push_back(C_WordManager::IT_S);
 
     if (minutes > 30) {
         hours++;
@@ -30,40 +30,40 @@ std::bitset<NUM_LEDS> S_WordClock::ConvertTimeToLeds(int hours, int minutes) {
     int hour = hours % 12;
     switch (hour) {
         case 0:
-            words.push_back(WordMapping::H_TWELVE);
+            words.push_back(C_WordManager::H_TWELVE);
             break;
         case 1:
-            words.push_back(WordMapping::H_ONE);
+            words.push_back(C_WordManager::H_ONE);
             break;
         case 2:
-            words.push_back(WordMapping::H_TWO);
+            words.push_back(C_WordManager::H_TWO);
             break;
         case 3:
-            words.push_back(WordMapping::H_THREE);
+            words.push_back(C_WordManager::H_THREE);
             break;
         case 4:
-            words.push_back(WordMapping::H_FOUR);
+            words.push_back(C_WordManager::H_FOUR);
             break;
         case 5:
-            words.push_back(WordMapping::H_FIVE);
+            words.push_back(C_WordManager::H_FIVE);
             break;
         case 6:
-            words.push_back(WordMapping::H_SIX);
+            words.push_back(C_WordManager::H_SIX);
             break;
         case 7:
-            words.push_back(WordMapping::H_SEVEN);
+            words.push_back(C_WordManager::H_SEVEN);
             break;
         case 8:
-            words.push_back(WordMapping::H_EIGHT);
+            words.push_back(C_WordManager::H_EIGHT);
             break;
         case 9:
-            words.push_back(WordMapping::H_NINE);
+            words.push_back(C_WordManager::H_NINE);
             break;
         case 10:
-            words.push_back(WordMapping::H_TEN);
+            words.push_back(C_WordManager::H_TEN);
             break;
         case 11:
-            words.push_back(WordMapping::H_ELEVEN);
+            words.push_back(C_WordManager::H_ELEVEN);
             break;
         default:
             break;
@@ -71,48 +71,48 @@ std::bitset<NUM_LEDS> S_WordClock::ConvertTimeToLeds(int hours, int minutes) {
 
     // Minutes
     if (minutes >= 0 && minutes < 5) {
-        words.push_back(WordMapping::O_CLOCK);
+        words.push_back(C_WordManager::O_CLOCK);
     } else if (minutes >= 5 && minutes < 10) {
-        words.push_back(WordMapping::M_FIVE);
-        words.push_back(WordMapping::PAST);
+        words.push_back(C_WordManager::M_FIVE);
+        words.push_back(C_WordManager::PAST);
     } else if (minutes >= 10 && minutes < 15) {
-        words.push_back(WordMapping::M_TEN);
-        words.push_back(WordMapping::PAST);
+        words.push_back(C_WordManager::M_TEN);
+        words.push_back(C_WordManager::PAST);
     } else if (minutes >= 15 && minutes < 20) {
-        words.push_back(WordMapping::M_A_QUARTER);
-        words.push_back(WordMapping::PAST);
+        words.push_back(C_WordManager::M_A_QUARTER);
+        words.push_back(C_WordManager::PAST);
     } else if (minutes >= 20 && minutes < 25) {
-        words.push_back(WordMapping::M_TWENTY);
-        words.push_back(WordMapping::PAST);
+        words.push_back(C_WordManager::M_TWENTY);
+        words.push_back(C_WordManager::PAST);
     } else if (minutes >= 25 && minutes < 30) {
-        words.push_back(WordMapping::M_TWENTY);
-        words.push_back(WordMapping::M_FIVE);
-        words.push_back(WordMapping::PAST);
+        words.push_back(C_WordManager::M_TWENTY);
+        words.push_back(C_WordManager::M_FIVE);
+        words.push_back(C_WordManager::PAST);
     } else if (minutes >= 30 && minutes < 35) {
-        words.push_back(WordMapping::M_HALF);
-        words.push_back(WordMapping::PAST);
+        words.push_back(C_WordManager::M_HALF);
+        words.push_back(C_WordManager::PAST);
     } else if (minutes >= 35 && minutes < 40) {
-        words.push_back(WordMapping::M_TWENTY);
-        words.push_back(WordMapping::M_FIVE);
-        words.push_back(WordMapping::TO);
+        words.push_back(C_WordManager::M_TWENTY);
+        words.push_back(C_WordManager::M_FIVE);
+        words.push_back(C_WordManager::TO);
     } else if (minutes >= 40 && minutes < 45) {
-        words.push_back(WordMapping::M_TWENTY);
-        words.push_back(WordMapping::TO);
+        words.push_back(C_WordManager::M_TWENTY);
+        words.push_back(C_WordManager::TO);
     } else if (minutes >= 45 && minutes < 50) {
-        words.push_back(WordMapping::M_A_QUARTER);
-        words.push_back(WordMapping::TO);
+        words.push_back(C_WordManager::M_A_QUARTER);
+        words.push_back(C_WordManager::TO);
     } else if (minutes >= 50 && minutes < 55) {
-        words.push_back(WordMapping::M_TEN);
-        words.push_back(WordMapping::TO);
+        words.push_back(C_WordManager::M_TEN);
+        words.push_back(C_WordManager::TO);
     } else if (minutes >= 55 && minutes < 60) {
-        words.push_back(WordMapping::M_FIVE);
-        words.push_back(WordMapping::TO);
+        words.push_back(C_WordManager::M_FIVE);
+        words.push_back(C_WordManager::TO);
     }
 
     std::bitset<NUM_LEDS> leds;
     // Convert words to leds
-    for (WordMapping::Word word : words) {
-        leds |= Core::getInstance()->_wordMapping->GetLeds(word);
+    for (C_WordManager::Word word : words) {
+        leds |= Core::getInstance()->_C_WordManager->GetLeds(word);
     }
 
     return leds;

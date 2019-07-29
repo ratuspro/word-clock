@@ -2,11 +2,12 @@
 #include <bitset>
 #include <vector>
 #include <config.h>
+#include <string>
 
-#ifndef WORDMAPPING_H
-#define WORDMAPPING_H
+#ifndef C_WordManager_H
+#define C_WordManager_H
 
-class WordMapping : Component {
+class C_WordManager : Component {
    public:
     enum Word {
         IT_S,
@@ -32,9 +33,11 @@ class WordMapping : Component {
         H_ELEVEN,
         H_TWELVE,
     };
-    WordMapping();
-    std::bitset<NUM_LEDS> GetLeds(WordMapping::Word word);
+    C_WordManager();
+    std::bitset<NUM_LEDS> GetLeds(C_WordManager::Word word);
     std::bitset<NUM_LEDS> GetLeds(uint_fast8_t number);
+    std::vector<std::vector<bool>> GetPixelsForLetter(char letter);
+    std::vector<std::vector<bool>> GetPixelsForText(std::string text);
 };
 
 #endif

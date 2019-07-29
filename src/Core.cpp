@@ -1,5 +1,5 @@
 #include <C_LedManager.h>
-#include <C_WordMapping.h>
+#include <C_WordManager.h>
 #include <Core.h>
 #include <EEPROM.h>
 #include <S_StartingScreen.h>
@@ -40,7 +40,7 @@ Core::Core() {
     _inputManager->AddButton(C_InputManager::ButtonName::CONFIRM, BUTTON3_PIN);
     
     // Add Word Mapping
-    _wordMapping = std::make_shared<WordMapping>();
+    _C_WordManager = std::make_shared<C_WordManager>();
 
     // Add Word Led Manager
     _ledManager = std::make_shared<LedManager>();
