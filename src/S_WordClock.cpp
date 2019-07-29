@@ -27,55 +27,8 @@ void S_WordClock::Update() {
     }
 }
 
-std::bitset<NUM_LEDS> S_WordClock::ConvertTimeToLeds(int hours, int minutes) {
+std::bitset<NUM_LEDS> S_WordClock::ConvertMinutesToLeds(int minutes){
     std::vector<C_WordManager::Word> words;
-
-    words.push_back(C_WordManager::IT_S);
-
-    if (minutes > 30) {
-        hours++;
-    }
-    int hour = hours % 12;
-    switch (hour) {
-        case 0:
-            words.push_back(C_WordManager::H_TWELVE);
-            break;
-        case 1:
-            words.push_back(C_WordManager::H_ONE);
-            break;
-        case 2:
-            words.push_back(C_WordManager::H_TWO);
-            break;
-        case 3:
-            words.push_back(C_WordManager::H_THREE);
-            break;
-        case 4:
-            words.push_back(C_WordManager::H_FOUR);
-            break;
-        case 5:
-            words.push_back(C_WordManager::H_FIVE);
-            break;
-        case 6:
-            words.push_back(C_WordManager::H_SIX);
-            break;
-        case 7:
-            words.push_back(C_WordManager::H_SEVEN);
-            break;
-        case 8:
-            words.push_back(C_WordManager::H_EIGHT);
-            break;
-        case 9:
-            words.push_back(C_WordManager::H_NINE);
-            break;
-        case 10:
-            words.push_back(C_WordManager::H_TEN);
-            break;
-        case 11:
-            words.push_back(C_WordManager::H_ELEVEN);
-            break;
-        default:
-            break;
-    }
 
     // Minutes
     if (minutes >= 0 && minutes < 5) {
@@ -122,6 +75,80 @@ std::bitset<NUM_LEDS> S_WordClock::ConvertTimeToLeds(int hours, int minutes) {
     for (C_WordManager::Word word : words) {
         leds |= Core::getInstance()->_wordManager->GetLeds(word);
     }
+
+    return leds;
+}
+
+std::bitset<NUM_LEDS> S_WordClock::ConvertHourToLeds(int hours, bool carry) {
+
+    std::vector<C_WordManager::Word> words;
+
+    if(carry) {hours++;}
+
+    int hour = hours % 12;
+
+    switch (hour) {
+        case 0:
+            words.push_back(C_WordManager::H_TWELVE);
+            break;
+        case 1:
+            words.push_back(C_WordManager::H_ONE);
+            break;
+        case 2:
+            words.push_back(C_WordManager::H_TWO);
+            break;
+        case 3:
+            words.push_back(C_WordManager::H_THREE);
+            break;
+        case 4:
+            words.push_back(C_WordManager::H_FOUR);
+            break;
+        case 5:
+            words.push_back(C_WordManager::H_FIVE);
+            break;
+        case 6:
+            words.push_back(C_WordManager::H_SIX);
+            break;
+        case 7:
+            words.push_back(C_WordManager::H_SEVEN);
+            break;
+        case 8:
+            words.push_back(C_WordManager::H_EIGHT);
+            break;
+        case 9:
+            words.push_back(C_WordManager::H_NINE);
+            break;
+        case 10:
+            words.push_back(C_WordManager::H_TEN);
+            break;
+        case 11:
+            words.push_back(C_WordManager::H_ELEVEN);
+            break;
+        default:
+            break;
+    }
+
+    std::bitset<NUM_LEDS> leds;
+    // Convert words to leds
+    for (C_WordManager::Word word : words) {
+        leds |= Core::getInstance()->_wordManager->GetLeds(word);
+    }
+
+    return leds;
+}
+
+std::bitset<NUM_LEDS> S_WordClock::ConvertTimeToLeds(int hours, int minutes) {
+
+    std::bitset<NUM_LEDS> leds;
+
+    //Add Hourse
+    leds |= ConvertHourToLeds(hours, minutes > 30);
+
+    //Add Minutes
+    leds |= ConvertMinutesToLeds(minutes);
+
+    //Add "It's"
+    leds |= Core::getInstance()->_wordManager->GetLeds(C_WordManager::IT_S);
 
     return leds;
 }

@@ -18,12 +18,13 @@ class LedManager : Component{
         void SetPixels(std::vector<int> leds, RgbColor color);
         void ClearPixels(RgbColor color);
         void Update();
+        void Test();
         std::shared_ptr<RgbColor> GetColorFromEEPROM();
         std::bitset<NUM_LEDS> ConvertFromScreenToBitSet(bool screen[SCREEN_WIDTH][SCREEN_HEIGHT]);
         std::bitset<NUM_LEDS> CreateScreen(uint8_t deltaX, uint8_t deltaY, std::vector<std::vector<bool>> frame, uint8_t width, uint8_t height);
     private:
         bool _leds_dirty;
-        NeoTopology<RowMajor270Layout> _matrixStrip;
+        NeoTopology<RowMajorAlternating270Layout> _matrixStrip;
         
 };
 

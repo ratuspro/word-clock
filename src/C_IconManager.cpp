@@ -28,7 +28,7 @@ static std::vector<std::vector<bool>> _brightness = {
 C_IconManager::C_IconManager() {
     Icon icon;
     icon._frame = _wifi;
-    _icons["wifi"] = icon;
+    _icons["time"] = icon;
 }
 
 Icon C_IconManager::GetFrame(std::string iconName, float progress) {

@@ -51,6 +51,33 @@ std::shared_ptr<RgbColor> LedManager::GetColorFromEEPROM() {
                                       EEPROM.readInt(EEPROM_ADDRESS_COLOR_B));
 }
 
+void LedManager::Test(){
+    std::bitset<NUM_LEDS> _screen;
+    ClearPixels(RgbColor(0,0,0));
+    _screen[_matrixStrip.Map(0,0)] = true;
+    _screen[_matrixStrip.Map(1,0)] = true;
+    _screen[_matrixStrip.Map(2,0)] = true;
+    _screen[_matrixStrip.Map(3,0)] = true;
+    _screen[_matrixStrip.Map(4,0)] = true;
+    _screen[_matrixStrip.Map(5,0)] = true;
+    _screen[_matrixStrip.Map(6,0)] = true;
+    _screen[_matrixStrip.Map(7,0)] = true;
+    _screen[_matrixStrip.Map(8,0)] = true;
+    _screen[_matrixStrip.Map(9,0)] = true;
+    _screen[_matrixStrip.Map(10,0)] = true;
+    _screen[_matrixStrip.Map(0,1)] = true;
+    _screen[_matrixStrip.Map(0,2)] = true;
+    _screen[_matrixStrip.Map(0,3)] = true;
+    _screen[_matrixStrip.Map(0,4)] = true;
+    _screen[_matrixStrip.Map(0,5)] = true;
+    _screen[_matrixStrip.Map(0,6)] = true;
+    _screen[_matrixStrip.Map(0,7)] = true;
+    _screen[_matrixStrip.Map(0,8)] = true;
+    _screen[_matrixStrip.Map(0,9)] = true;
+    _screen[_matrixStrip.Map(10,9)] = true;
+    SetPixels(_screen);
+}
+
 std::bitset<NUM_LEDS> LedManager::ConvertFromScreenToBitSet(bool screen[SCREEN_WIDTH][SCREEN_HEIGHT]) {
     std::bitset<NUM_LEDS> _screen;
     for (uint8_t x = 0; x < SCREEN_WIDTH; x++) {

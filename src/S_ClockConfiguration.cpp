@@ -6,14 +6,35 @@
 
 S_ClockConfiguration::S_ClockConfiguration() {
     _currentMode = CHANGING_HOURS;
+    _ticksToChange = 60;
+    _filled = true;
 }
 
 void S_ClockConfiguration::Update() {
-    std::bitset<NUM_LEDS> bits = S_WordClock::ConvertTimeToLeds(
-        _hour, _minute);
-    Core::getInstance()->_ledManager->ClearPixels(RgbColor(0, 0, 0));
-    Core::getInstance()->_ledManager->SetPixels(bits);
+
     HandleInput();
+    
+    // Clear all pixels
+    Core::getInstance()->_ledManager->ClearPixels(RgbColor(0, 0, 0));
+    // Fill entire time
+    Core::getInstance()->_ledManager->SetPixels(
+        S_WordClock::ConvertTimeToLeds(_hour, _minute));
+
+    //Blink relevant component
+    if (!_filled) {
+        if (_currentMode == CHANGING_MINUTES) {
+            Core::getInstance()->_ledManager->SetPixels(
+                S_WordClock::ConvertMinutesToLeds(_minute), RgbColor(0, 0, 0));
+        } else {
+            Core::getInstance()->_ledManager->SetPixels(
+                S_WordClock::ConvertHourToLeds(_hour, _minute>30), RgbColor(0, 0, 0));
+        }
+    }
+
+    //Update Timer
+    if (--_ticksToChange == 0) {
+        ResetTimer(!_filled);
+    }
 }
 
 void S_ClockConfiguration::HandleInput() {
@@ -29,6 +50,7 @@ void S_ClockConfiguration::HandleInput() {
                 _minute = 0;
             }
         }
+        ResetTimer(true);
     }
     if (Core::getInstance()->_inputManager->GetKeyDown(C_InputManager::DOWN)) {
         if (_currentMode == CHANGING_HOURS) {
@@ -42,12 +64,14 @@ void S_ClockConfiguration::HandleInput() {
                 _minute = 55;
             }
         }
+        ResetTimer(true);
     }
 
     if (Core::getInstance()->_inputManager->GetKeyDown(
             C_InputManager::CONFIRM)) {
         if (_currentMode == CHANGING_HOURS) {
             _currentMode = CHANGING_MINUTES;
+            ResetTimer(true);
         } else if (_currentMode == CHANGING_MINUTES) {
             SetMachineClock();
             Core::getInstance()->MoveToScreen(std::make_shared<S_WordClock>());
@@ -56,11 +80,20 @@ void S_ClockConfiguration::HandleInput() {
 }
 
 void S_ClockConfiguration::SetMachineClock() {
-    timeval epoch = {_hour *3600 + _minute * 60,0};
+    timeval epoch = {_hour * 3600 + _minute * 60, 0};
     const timeval *tv = &epoch;
     timezone utc = {0, 0};
     const timezone *tz = &utc;
     Serial.println(epoch.tv_sec);
     settimeofday(tv, tz);
     delay(1000);
+}
+
+void S_ClockConfiguration::ResetTimer(bool isFilled){
+    if(_filled){
+        _ticksToChange = 40;
+    }else{
+        _ticksToChange = 60;
+    }
+    _filled = isFilled;
 }
