@@ -3,11 +3,19 @@
 #include <WiFi.h>
 #include <config.h>
 #include <time.h>
+#include <S_Menu.h>
 
 RgbColor black(0, 0, 0);
 
+void S_WordClock::HandleInput(){
+    if(Core::getInstance()->_inputManager->GetKeyDown(C_InputManager::MENU)){
+        Core::getInstance()->MoveToScreen(std::make_shared<S_Menu>());
+    }
+}
+
 void S_WordClock::Update() {
     if (_currentState == Screen::State::RUNNING) {
+        HandleInput();
         struct tm now;
         getLocalTime(&now, 0);
         Core::getInstance()->_ledManager->ClearPixels(black);
