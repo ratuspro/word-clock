@@ -7,7 +7,7 @@
 class C_IconManager : public Component{
     public:
         C_IconManager();
-        Icon GetFrame(std::string iconName, float progress);
+        Icon GetFrame(std::string iconName);
     private:
         std::map<std::string, Icon> _icons;
 };

@@ -89,7 +89,6 @@ std::bitset<NUM_LEDS> LedManager::ConvertFromScreenToBitSet(bool screen[SCREEN_W
 }
 
 std::bitset<NUM_LEDS> LedManager::CreateScreen(uint8_t deltaX, uint8_t deltaY, std::vector<std::vector<bool>> frame, uint8_t width, uint8_t height) {
-    std::bitset<NUM_LEDS> _screen;
 
     bool screen[SCREEN_WIDTH][SCREEN_HEIGHT];
     for (uint8_t x = 0; x < width; x++) {

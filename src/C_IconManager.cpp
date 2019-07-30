@@ -4,7 +4,7 @@
 static std::vector<std::vector<bool>> _wifi = {
     {0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 0},
     {0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0}};
 
 static std::vector<std::vector<bool>> _color = {
@@ -31,6 +31,6 @@ C_IconManager::C_IconManager() {
     _icons["time"] = icon;
 }
 
-Icon C_IconManager::GetFrame(std::string iconName, float progress) {
+Icon C_IconManager::GetFrame(std::string iconName) {
     return _icons[iconName];
 }
