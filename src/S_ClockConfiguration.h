@@ -14,8 +14,8 @@ class S_ClockConfiguration : public Screen {
         void SetMachineClock();
         enum Mode {CHANGING_HOURS, CHANGING_MINUTES};
         Mode _currentMode;
-        int8_t _hour = 0;
-        int8_t _minute = 0;
+        int8_t _hour;
+        int8_t _minute;
         
         void ResetTimer(bool isFilled);
         bool _filled;

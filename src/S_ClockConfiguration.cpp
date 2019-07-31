@@ -2,7 +2,7 @@
 #include <S_ClockConfiguration.h>
 #include <S_WordClock.h>
 #include <errno.h>
-#include <sys/time.h>
+#include <time.h>
 
 S_ClockConfiguration::S_ClockConfiguration() {
     _currentMode = CHANGING_HOURS;
@@ -10,29 +10,35 @@ S_ClockConfiguration::S_ClockConfiguration() {
     _filled = true;
     _ledManager = Core::getInstance()->_ledManager;
     _inputManager = Core::getInstance()->_inputManager;
+
+    struct tm now;
+    getLocalTime(&now, 0);
+    _hour = now.tm_hour;
+    _minute = now.tm_min;
 }
 
 void S_ClockConfiguration::Update() {
-
     HandleInput();
-    
+
     // Clear all pixels
     _ledManager->ClearPixels();
+
     // Fill entire time
     _ledManager->SetPixels(S_WordClock::ConvertTimeToLeds(_hour, _minute));
 
-    //Blink relevant component
+    // Blink relevant component
     if (!_filled) {
         if (_currentMode == CHANGING_MINUTES) {
             _ledManager->SetPixels(S_WordClock::ConvertMinutesToLeds(_minute),
-                S_WordClock::ConvertMinutesToLeds(_minute), RgbColor(0, 0, 0));
+                                   RgbColor(0, 0, 0));
         } else {
             _ledManager->SetPixels(
-                S_WordClock::ConvertHourToLeds(_hour, _minute>30), RgbColor(0, 0, 0));
+                S_WordClock::ConvertHourToLeds(_hour, _minute > 30),
+                RgbColor(0, 0, 0));
         }
     }
 
-    //Update Timer
+    // Update Timer
     if (--_ticksToChange == 0) {
         ResetTimer(!_filled);
     }
@@ -89,10 +95,10 @@ void S_ClockConfiguration::SetMachineClock() {
     delay(1000);
 }
 
-void S_ClockConfiguration::ResetTimer(bool isFilled){
-    if(_filled){
+void S_ClockConfiguration::ResetTimer(bool isFilled) {
+    if (_filled) {
         _ticksToChange = 40;
-    }else{
+    } else {
         _ticksToChange = 60;
     }
     _filled = isFilled;
