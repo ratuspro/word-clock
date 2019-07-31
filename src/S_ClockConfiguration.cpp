@@ -8,6 +8,8 @@ S_ClockConfiguration::S_ClockConfiguration() {
     _currentMode = CHANGING_HOURS;
     _ticksToChange = 60;
     _filled = true;
+    _ledManager = Core::getInstance()->_ledManager;
+    _inputManager = Core::getInstance()->_inputManager;
 }
 
 void S_ClockConfiguration::Update() {
@@ -15,18 +17,17 @@ void S_ClockConfiguration::Update() {
     HandleInput();
     
     // Clear all pixels
-    Core::getInstance()->_ledManager->ClearPixels(RgbColor(0, 0, 0));
+    _ledManager->ClearPixels();
     // Fill entire time
-    Core::getInstance()->_ledManager->SetPixels(
-        S_WordClock::ConvertTimeToLeds(_hour, _minute));
+    _ledManager->SetPixels(S_WordClock::ConvertTimeToLeds(_hour, _minute));
 
     //Blink relevant component
     if (!_filled) {
         if (_currentMode == CHANGING_MINUTES) {
-            Core::getInstance()->_ledManager->SetPixels(
+            _ledManager->SetPixels(S_WordClock::ConvertMinutesToLeds(_minute),
                 S_WordClock::ConvertMinutesToLeds(_minute), RgbColor(0, 0, 0));
         } else {
-            Core::getInstance()->_ledManager->SetPixels(
+            _ledManager->SetPixels(
                 S_WordClock::ConvertHourToLeds(_hour, _minute>30), RgbColor(0, 0, 0));
         }
     }
@@ -38,7 +39,7 @@ void S_ClockConfiguration::Update() {
 }
 
 void S_ClockConfiguration::HandleInput() {
-    if (Core::getInstance()->_inputManager->GetKeyDown(C_InputManager::UP)) {
+    if (_inputManager->GetKeyDown(C_InputManager::UP)) {
         if (_currentMode == CHANGING_HOURS) {
             _hour = _hour + 1;
             if (_hour >= 12) {
@@ -52,7 +53,7 @@ void S_ClockConfiguration::HandleInput() {
         }
         ResetTimer(true);
     }
-    if (Core::getInstance()->_inputManager->GetKeyDown(C_InputManager::DOWN)) {
+    if (_inputManager->GetKeyDown(C_InputManager::DOWN)) {
         if (_currentMode == CHANGING_HOURS) {
             _hour = _hour - 1;
             if (_hour < 0) {
@@ -67,8 +68,7 @@ void S_ClockConfiguration::HandleInput() {
         ResetTimer(true);
     }
 
-    if (Core::getInstance()->_inputManager->GetKeyDown(
-            C_InputManager::CONFIRM)) {
+    if (_inputManager->GetKeyDown(C_InputManager::CONFIRM)) {
         if (_currentMode == CHANGING_HOURS) {
             _currentMode = CHANGING_MINUTES;
             ResetTimer(true);
