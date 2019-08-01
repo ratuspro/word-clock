@@ -9,23 +9,24 @@
 #ifndef LEDMANAGER_H
 #define LEDMANAGER_H
 
-class LedManager : Component{
+struct LedCoord{
     public:
-        LedManager();
-        void SetPixels(std::bitset<NUM_LEDS> leds);
-        void SetPixels(std::bitset<NUM_LEDS> leds, RgbColor color);
-        void SetPixels(std::vector<int> leds);
-        void SetPixels(std::vector<int> leds, RgbColor color);
-        void ClearPixels(RgbColor color);
+        uint8_t x;
+        uint8_t y;
+};
+
+class C_LedManager : Component{
+    public:
+        C_LedManager();
         void Update();
-        void Test();
-        std::shared_ptr<RgbColor> GetColorFromEEPROM();
-        std::bitset<NUM_LEDS> ConvertFromScreenToBitSet(bool screen[SCREEN_WIDTH][SCREEN_HEIGHT]);
-        std::bitset<NUM_LEDS> CreateScreen(uint8_t deltaX, uint8_t deltaY, std::vector<std::vector<bool>> frame, uint8_t width, uint8_t height);
+        void ClearPixels();
+        void SetAllPixels(RgbColor color);
+        void SetPixel(LedCoord coord, RgbColor color);
+        void SetPixels(std::vector<LedCoord> coords, RgbColor color);
     private:
-        bool _leds_dirty;
+        std::shared_ptr<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>> _strip;
         NeoTopology<RowMajorAlternating270Layout> _matrixStrip;
-        
+        bool _leds_dirty;
 };
 
 #endif

@@ -10,12 +10,12 @@ class S_StartingScreen : public Screen {
   private:
     void UpdateAnimation();
     // Word
-    std::bitset<NUM_LEDS> _word;
+    std::vector<LedCoord> _word;
     int _numberOfFades;
     bool _increasing = true;
     float _progress = 0;
-    std::shared_ptr<RgbColor> _initialColor;
-    std::shared_ptr<RgbColor> _targetColor; 
+    RgbColor _initialColor;
+    RgbColor _targetColor; 
 
     // WiFi
     int _numberOfWifiAttempts;

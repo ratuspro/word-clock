@@ -43,7 +43,7 @@ Core::Core() {
     _wordManager = std::make_shared<C_WordManager>();
 
     // Add Word Led Manager
-    _ledManager = std::make_shared<LedManager>();
+    _ledManager = std::make_shared<C_LedManager>();
 
     // Add network Manager
     _networkManager = std::make_shared<C_NetworkManager>();
@@ -51,6 +51,9 @@ Core::Core() {
     // Add Icon Manager
     _iconManager = std::make_shared<C_IconManager>();
 
+    // Add EEPROM Manager
+    _eepromManager = std::make_shared<C_EepromManager>();
+    
     // Start Screen
     Core::MoveToScreen(std::make_shared<S_StartingScreen>());
 

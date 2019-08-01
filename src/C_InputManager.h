@@ -2,6 +2,9 @@
 #include <map>
 #include <Bounce2.h>
 
+#ifndef C_InputManager_H
+#define C_InputManager_H
+
 class C_InputManager : public Component {
     struct ButtonWrapper {
         uint8_t ledPin;
@@ -20,3 +23,5 @@ class C_InputManager : public Component {
    private:
     std::map<ButtonName, ButtonWrapper> _buttons;
 };
+
+#endif

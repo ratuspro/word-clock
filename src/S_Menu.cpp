@@ -12,9 +12,9 @@ void S_Menu::Update() {
     HandleInput();
 
     // Get one icon
-    Core::getInstance()->_ledManager->ClearPixels(RgbColor(0,0,0));
+    Core::getInstance()->_ledManager->ClearPixels();
     Icon icon = Core::getInstance()->_iconManager->GetFrame(_entries[_selectedEntry].iconName);
-    Core::getInstance()->_ledManager->SetPixels(Core::getInstance()->_ledManager->CreateScreen(0,0,icon._frame,ICON_WIDTH,ICON_HEIGHT));
+    //Core::getInstance()->_ledManager->SetPixels(Core::getInstance()->_ledManager->CreateScreen(0,0,icon._frame,ICON_WIDTH,ICON_HEIGHT));
 }
 
 void S_Menu::addEntry(std::string iconName, std::shared_ptr<Screen> screen) {

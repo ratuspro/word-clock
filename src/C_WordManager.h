@@ -3,6 +3,7 @@
 #include <vector>
 #include <config.h>
 #include <string>
+#include <C_LedManager.h>
 
 #ifndef C_WordManager_H
 #define C_WordManager_H
@@ -34,10 +35,11 @@ class C_WordManager : Component {
         H_TWELVE,
     };
     C_WordManager();
-    std::bitset<NUM_LEDS> GetLeds(C_WordManager::Word word);
-    std::bitset<NUM_LEDS> GetLeds(uint_fast8_t number);
-    std::vector<std::vector<bool>> GetPixelsForLetter(char letter);
-    std::vector<std::vector<bool>> GetPixelsForText(std::string text);
+    std::vector<LedCoord> GetPixels(Word word);
+    std::vector<LedCoord> GetPixels(std::vector<C_WordManager::Word> words);
+    std::vector<LedCoord> ConvertTimeToPixels(uint8_t hours, uint8_t minutes);
+    std::vector<LedCoord> ConvertHoursToPixels(uint8_t hours, bool carry);
+    std::vector<LedCoord> ConvertMinutesToPixels(uint8_t minutes);
 };
 
 #endif

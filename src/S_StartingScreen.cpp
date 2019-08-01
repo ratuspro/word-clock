@@ -72,16 +72,17 @@ void S_StartingScreen::Update() {
 
 void S_StartingScreen::UpdateAnimation() {
     // If no word is defined, select GAIPS
-    if (_word.count() == 0) {
-        _word = Core::getInstance()->_wordManager->GetLeds(C_WordManager::GAIPS);
-        _initialColor = std::make_shared<RgbColor>(0, 0, 0);
-        _targetColor = Core::getInstance()->_ledManager->GetColorFromEEPROM();
+    if (_word.size() == 0) {
+        _word =
+            Core::getInstance()->_wordManager->GetPixels(C_WordManager::GAIPS);
+        _initialColor = RgbColor(0, 0, 0);
+        _targetColor =
+            Core::getInstance()->_eepromManager->GetForegroundColor();
     }
 
     // Manage Animation
     Core::getInstance()->_ledManager->SetPixels(
-        _word,
-        _targetColor->LinearBlend(*_initialColor, *_targetColor, _progress));
+        _word, Core::getInstance()->_eepromManager->GetForegroundColor());
 
     if (_increasing) {
         _progress += 0.01;

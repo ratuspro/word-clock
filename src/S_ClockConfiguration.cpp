@@ -2,7 +2,7 @@
 #include <S_ClockConfiguration.h>
 #include <S_WordClock.h>
 #include <errno.h>
-#include <time.h>
+#include <sys/time.h>
 
 S_ClockConfiguration::S_ClockConfiguration() {
     _currentMode = CHANGING_HOURS;
@@ -24,16 +24,16 @@ void S_ClockConfiguration::Update() {
     _ledManager->ClearPixels();
 
     // Fill entire time
-    _ledManager->SetPixels(S_WordClock::ConvertTimeToLeds(_hour, _minute));
+    _ledManager->SetPixels(Core::getInstance()->_wordManager->ConvertTimeToPixels(_hour, _minute), Core::getInstance()->_eepromManager->GetForegroundColor());
 
     // Blink relevant component
     if (!_filled) {
         if (_currentMode == CHANGING_MINUTES) {
-            _ledManager->SetPixels(S_WordClock::ConvertMinutesToLeds(_minute),
+            _ledManager->SetPixels(Core::getInstance()->_wordManager->ConvertMinutesToPixels(_minute),
                                    RgbColor(0, 0, 0));
         } else {
             _ledManager->SetPixels(
-                S_WordClock::ConvertHourToLeds(_hour, _minute > 30),
+                Core::getInstance()->_wordManager->ConvertHoursToPixels(_hour, _minute > 30),
                 RgbColor(0, 0, 0));
         }
     }
