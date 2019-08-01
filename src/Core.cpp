@@ -71,4 +71,5 @@ void Core::MoveToScreen(std::shared_ptr<Screen> nextScreen) {
     }
     _currentScreen = nextScreen;
     _currentScreen->Run();
+    _inputManager->ClearAllPendingInput();
 }

@@ -27,3 +27,9 @@ bool C_InputManager::GetKeyDown(ButtonName alias) {
     }
     return false;
 }
+
+void C_InputManager::ClearAllPendingInput(){
+    for (std::map<ButtonName, ButtonWrapper>::iterator it = _buttons.begin(); it != _buttons.end(); it++) {
+        it->second.isPressed = false;
+    }
+}

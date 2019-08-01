@@ -15,6 +15,7 @@ class C_InputManager : public Component {
     void AddButton(ButtonName alias, int buttonID);
     void Update();
     bool GetKeyDown(ButtonName alias);
+    void ClearAllPendingInput();
 
    private:
     std::map<ButtonName, ButtonWrapper> _buttons;
