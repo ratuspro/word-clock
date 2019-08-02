@@ -31,10 +31,6 @@
 // GRAPHICS
 #define FRAME_RATE 60
 
-// ICONS
-#define ICON_WIDTH 8
-#define ICON_HEIGHT 8
-
 // WORDS
 #define LETTER_HEIGHT 4
 #define LETTER_WIDTH 3
