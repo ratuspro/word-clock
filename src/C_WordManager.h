@@ -34,7 +34,6 @@ class C_WordManager : Component {
         H_ELEVEN,
         H_TWELVE,
     };
-    C_WordManager();
     std::vector<LedCoord> GetPixels(Word word);
     std::vector<LedCoord> GetPixels(std::vector<C_WordManager::Word> words);
     std::vector<LedCoord> ConvertTimeToPixels(uint8_t hours, uint8_t minutes);
