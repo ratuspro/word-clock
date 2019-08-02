@@ -3,11 +3,11 @@
 #include <EEPROM.h>
 #include <config.h>
 
-C_LedManager::C_LedManager()
+C_LedManager::C_LedManager(std::shared_ptr<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>> strip)
     : Component(),
       _matrixStrip(SCREEN_WIDTH, SCREEN_HEIGHT),
       _leds_dirty(false) {
-    _strip = Core::getInstance()->_strip;
+    _strip = strip;
 }
 
 void C_LedManager::Update() {

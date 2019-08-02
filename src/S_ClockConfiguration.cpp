@@ -15,6 +15,7 @@ S_ClockConfiguration::S_ClockConfiguration() {
     getLocalTime(&now, 0);
     _hour = now.tm_hour;
     _minute = now.tm_min;
+
 }
 
 void S_ClockConfiguration::Update() {
@@ -90,9 +91,7 @@ void S_ClockConfiguration::SetMachineClock() {
     const timeval *tv = &epoch;
     timezone utc = {0, 0};
     const timezone *tz = &utc;
-    Serial.println(epoch.tv_sec);
     settimeofday(tv, tz);
-    delay(1000);
 }
 
 void S_ClockConfiguration::ResetTimer(bool isFilled) {

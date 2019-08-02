@@ -24,6 +24,7 @@ void S_StartingScreen::Update() {
     if (Core::getInstance()->_inputManager->GetKeyDown(C_InputManager::MENU)) {
         Core::getInstance()->MoveToScreen(
             std::make_shared<S_ClockConfiguration>());
+        return;
     }
 
     // Handle Animation
@@ -82,7 +83,7 @@ void S_StartingScreen::UpdateAnimation() {
 
     // Manage Animation
     Core::getInstance()->_ledManager->SetPixels(
-        _word, Core::getInstance()->_eepromManager->GetForegroundColor());
+        _word, RgbColor::LinearBlend(_initialColor, _targetColor, _progress));
 
     if (_increasing) {
         _progress += 0.01;

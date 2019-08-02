@@ -40,18 +40,23 @@ Core::Core() {
     _inputManager->AddButton(C_InputManager::ButtonName::CONFIRM, BUTTON3_PIN);
     
     // Add Word Mapping
+    Serial.println("Created Word Manager");
     _wordManager = std::make_shared<C_WordManager>();
 
     // Add Word Led Manager
-    _ledManager = std::make_shared<C_LedManager>();
+    Serial.println("Created Led Manager");
+    _ledManager = std::make_shared<C_LedManager>(_strip);
 
     // Add network Manager
+    Serial.println("Created Network Manager");
     _networkManager = std::make_shared<C_NetworkManager>();
 
     // Add Icon Manager
+    Serial.println("Created Icon Manager");
     _iconManager = std::make_shared<C_IconManager>();
 
     // Add EEPROM Manager
+    Serial.println("Created EEPROM MANAGER");
     _eepromManager = std::make_shared<C_EepromManager>();
     
     // Start Screen
@@ -68,11 +73,11 @@ void Core::Update() {
     delay(1000 / FRAME_RATE);
 }
 
-void Core::MoveToScreen(std::shared_ptr<Screen> nextScreen) {
+void Core::MoveToScreen(std::shared_ptr<Screen> nextScreen) {  
     if (_currentScreen) {
         _currentScreen->Stop();
     }
+    _inputManager->ClearAllPendingInput();  
     _currentScreen = nextScreen;
-    _currentScreen->Run();
-    _inputManager->ClearAllPendingInput();
+    _currentScreen->Run();  
 }

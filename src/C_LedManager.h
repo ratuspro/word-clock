@@ -17,7 +17,7 @@ struct LedCoord{
 
 class C_LedManager : Component{
     public:
-        C_LedManager();
+        C_LedManager(std::shared_ptr<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>> strip);
         void Update();
         void ClearPixels();
         void SetAllPixels(RgbColor color);

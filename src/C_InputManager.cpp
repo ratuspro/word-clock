@@ -8,7 +8,6 @@ void C_InputManager::AddButton(ButtonName alias, int ledPin) {
     _buttons[alias].isPressed = false;
     _buttons[alias].debouncer.attach(ledPin);
     _buttons[alias].debouncer.interval(DEBOUNCE_INTERVAL);
-    Serial.println(_buttons.size());
 }
 
 void C_InputManager::Update() {
