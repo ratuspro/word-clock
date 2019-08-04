@@ -12,7 +12,7 @@ static const std::vector<LedCoord> LEDS_IT_S = {{0, 0}, {1, 0}, {2, 0}};
 static const std::vector<LedCoord> LEDS_TO = {{9, 3}, {10, 3}};
 static const std::vector<LedCoord> LEDS_PAST = {{2, 4}, {3, 4}, {4, 4}, {5, 4}};
 static const std::vector<LedCoord> LEDS_O_CLOCK = {
-    {6, 9}, {7, 9}, {8, 9}, {9, 9}, {10, 9}};
+    {5, 9},{6, 9}, {7, 9}, {8, 9}, {9, 9}, {10, 9}};
 static const std::vector<LedCoord> LEDS_M_A_QUARTER = {
     {2, 1}, {4, 1}, {5, 1}, {6, 1}, {7, 1}, {8, 1}, {9, 1}, {10, 1}};
 static const std::vector<LedCoord> LEDS_M_TWENTY = {{0, 2}, {1, 2}, {2, 2},

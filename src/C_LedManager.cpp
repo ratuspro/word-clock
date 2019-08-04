@@ -38,8 +38,21 @@ void C_LedManager::SetPixel(LedCoord coord, RgbColor color) {
     _leds_dirty = true;
 }
 
+void C_LedManager::SetPixel(uint8_t xPosition, uint8_t yPosition, RgbColor color) {
+    uint8_t pixelIndex = _matrixStrip.Map(xPosition, yPosition);
+    if (_strip->GetPixelColor(pixelIndex) == color) {
+        return;
+    }
+    _strip->SetPixelColor(pixelIndex, color);
+    _leds_dirty = true;
+}
+
 void C_LedManager::SetPixels(std::vector<LedCoord> coords, RgbColor color) {
+    SetPixels(coords,color, 0,0);
+}
+
+void C_LedManager::SetPixels(std::vector<LedCoord> coords, RgbColor color, uint8_t xOffset, uint8_t yOffset){
     for (uint8_t i = 0; i < coords.size(); i++) {
-        SetPixel(coords[i], color);
+        SetPixel(coords[i].x + xOffset, coords[i].y + yOffset, color);
     }
 }

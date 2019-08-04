@@ -17,4 +17,6 @@ class S_Menu : public Screen {
     std::vector<MenuEntry> _entries;
     void addEntry(std::string iconName,std::shared_ptr<Screen> screen);
     void HandleInput();
+    void DrawSidebar();
+    void DrawIcon();
 };

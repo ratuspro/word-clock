@@ -6,7 +6,7 @@
 	],
 	"settings": {
 		"terminal.integrated.env.windows": {
-			"PATH": "C:\\Users\\Diogo Rato\\.platformio\\penv\\Scripts;C:\\Users\\Diogo Rato\\.platformio\\penv;C:\\ProgramData\\DockerDesktop\\version-bin;C:\\Program Files\\Docker\\Docker\\Resources\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\nodejs\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Program Files\\Git\\cmd;C:\\Program Files\\dotnet\\;C:\\Users\\Diogo Rato\\AppData\\Local\\Microsoft\\WindowsApps;;C:\\Users\\Diogo Rato\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\Diogo Rato\\AppData\\Roaming\\npm;C:\\Program Files\\JetBrains\\PyCharm Community Edition 2019.1.1\\bin;;C:\\ProgramData\\DockerDesktop\\version-bin;C:\\Program Files\\Docker\\Docker\\Resources\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\nodejs\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Program Files\\Git\\cmd;C:\\Program Files\\dotnet\\;C:\\Users\\Diogo Rato\\AppData\\Local\\Microsoft\\WindowsApps;;C:\\Users\\Diogo Rato\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\Diogo Rato\\AppData\\Roaming\\npm;C:\\Program Files\\JetBrains\\PyCharm Community Edition 2019.1.1\\bin;",
+			"PATH": "C:\\Users\\Ratuspro\\.platformio\\penv\\Scripts;C:\\Users\\Ratuspro\\.platformio\\penv;C:\\ProgramData\\DockerDesktop\\version-bin;C:\\Program Files\\Docker\\Docker\\Resources\\bin;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files\\Git\\cmd;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\Ratuspro\\AppData\\Local\\Microsoft\\WindowsApps;;C:\\Users\\Ratuspro\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\ProgramData\\DockerDesktop\\version-bin;C:\\Program Files\\Docker\\Docker\\Resources\\bin;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files\\Git\\cmd;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\Ratuspro\\AppData\\Local\\Microsoft\\WindowsApps;;C:\\Users\\Ratuspro\\AppData\\Local\\Programs\\Microsoft VS Code\\bin",
 			"PLATFORMIO_CALLER": "vscode"
 		},
 		"files.associations": {
@@ -45,6 +45,7 @@
 			"bitset": "cpp",
 			"memory": "cpp",
 			"cstddef": "cpp"
-		}
+		},
+		"C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, IndentWidth: 4 }"
 	}
 }
