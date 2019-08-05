@@ -54,6 +54,10 @@ Core::Core() {
     // Add Icon Manager
     Serial.println("Created Icon Manager");
     _iconManager = std::make_shared<C_IconManager>();
+    _iconManager->AddIcon("time", Icon());
+    _iconManager->AddIcon("color", Icon());
+    _iconManager->AddIcon("brightness", Icon());
+    _iconManager->AddIcon("network", Icon());
 
     // Add EEPROM Manager
     Serial.println("Created EEPROM MANAGER");

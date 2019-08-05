@@ -6,8 +6,8 @@
 
 class C_IconManager : public Component{
     public:
-        C_IconManager();
-        Icon GetFrame(std::string iconName);
+        void AddIcon(std::string iconName, Icon icon);
+        Icon GetIcon(std::string iconName);
     private:
         std::map<std::string, Icon> _icons;
 };

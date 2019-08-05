@@ -6,8 +6,7 @@
 
 class Icon {
    public:
-    std::vector<std::vector<bool>> _frame;
-    std::vector<LedCoord> GetPixelsCoordinates();
+    void Update();
 };
 
 #endif

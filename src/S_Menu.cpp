@@ -6,26 +6,23 @@
 #include <S_ColorConfiguration.h>
 #include <S_Menu.h>
 #include <S_NetworkConfiguration.h>
-#include <config.h>
 #include <S_WordClock.h>
+#include <config.h>
 
 S_Menu::S_Menu() {
     addEntry("time", std::make_shared<S_ClockConfiguration>());
-    addEntry("time", std::make_shared<S_ColorConfiguration>());
+    addEntry("color", std::make_shared<S_ColorConfiguration>());
     addEntry("brightness", std::make_shared<S_BrightnessConfiguration>());
-    addEntry("time", std::make_shared<S_NetworkConfiguration>());
+    addEntry("network", std::make_shared<S_NetworkConfiguration>());
     _selectedEntry = 0;
     _inSubMenu = false;
 }
 
 void S_Menu::Update() {
-
     HandleInput();
-
     Core::getInstance()->_ledManager->ClearPixels();
     DrawSidebar();
     DrawIcon();
-   
 }
 
 void S_Menu::addEntry(std::string iconName, std::shared_ptr<Screen> screen) {
@@ -45,12 +42,12 @@ void S_Menu::HandleInput() {
                    C_InputManager::UP)) {
         _selectedEntry--;
         if (_selectedEntry > _entries.size()) {
-            _selectedEntry = _entries.size() -1;
+            _selectedEntry = _entries.size() - 1;
         }
     } else if (Core::getInstance()->_inputManager->GetKeyDown(
                    C_InputManager::CONFIRM)) {
         Core::getInstance()->MoveToScreen(_entries[_selectedEntry].screen);
-    }else if (Core::getInstance()->_inputManager->GetKeyDown(
+    } else if (Core::getInstance()->_inputManager->GetKeyDown(
                    C_InputManager::MENU)) {
         Core::getInstance()->MoveToScreen(std::make_shared<S_WordClock>());
     }
@@ -63,16 +60,16 @@ void S_Menu::DrawSidebar() {
     for (uint8_t entry = 0; entry < _entries.size(); entry++) {
         uint8_t pos = entry * sidebarSpace + entry;
         LedCoord entryCoord = {0, pos};
-        RgbColor color =
-            Core::getInstance()->_eepromManager->GetForegroundColor();
-        if (_selectedEntry == entry) {
-            color.Lighten(100);
+        RgbColor color = RgbColor(255, 255, 255);
+        if (_selectedEntry != entry) {
+            color.Darken(128);
         }
         Core::getInstance()->_ledManager->SetPixel(entryCoord, color);
     }
 }
 
 void S_Menu::DrawIcon() {
-    Icon CurrentIcon = Core::getInstance()->_iconManager->GetFrame(_entries[_selectedEntry].iconName);
-    Core::getInstance()->_ledManager->SetPixels(CurrentIcon.GetPixelsCoordinates(), Core::getInstance()->_eepromManager->GetForegroundColor(),2,1);
+    Core::getInstance()
+        ->_iconManager->GetIcon(_entries[_selectedEntry].iconName)
+        .Update();
 }
