@@ -1,10 +1,9 @@
 #include <bitset>
 #include <vector>
-#include <NeoPixelBus.h>
 #include <memory>
 #include <Component.h>
 #include <config.h>
-
+#include <NeoPixelBrightnessBus.h>
 
 #ifndef LEDMANAGER_H
 #define LEDMANAGER_H
@@ -17,7 +16,7 @@ struct LedCoord{
 
 class C_LedManager : Component{
     public:
-        C_LedManager(std::shared_ptr<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>> strip);
+        C_LedManager(std::shared_ptr<NeoPixelBrightnessBus<NeoGrbFeature, Neo800KbpsMethod>> strip);
         void Update();
         void ClearPixels();
         void SetAllPixels(RgbColor color);
@@ -26,7 +25,7 @@ class C_LedManager : Component{
         void SetPixels(std::vector<LedCoord> coords, RgbColor color);
         void SetPixels(std::vector<LedCoord> coords, RgbColor color, uint8_t xOffset, uint8_t yOffset);
     private:
-        std::shared_ptr<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>> _strip;
+        std::shared_ptr<NeoPixelBrightnessBus<NeoGrbFeature, Neo800KbpsMethod>> _strip;
         NeoTopology<RowMajorAlternating270Layout> _matrixStrip;
         bool _leds_dirty;
 };

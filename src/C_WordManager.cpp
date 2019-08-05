@@ -1,7 +1,6 @@
 #include <C_LedManager.h>
 #include <C_WordManager.h>
 #include <Core.h>
-#include <NeoPixelBus.h>
 #include <map>
 #include <string>
 #include <vector>

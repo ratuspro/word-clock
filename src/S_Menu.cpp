@@ -7,22 +7,25 @@
 #include <S_Menu.h>
 #include <S_NetworkConfiguration.h>
 #include <config.h>
+#include <S_WordClock.h>
 
 S_Menu::S_Menu() {
     addEntry("time", std::make_shared<S_ClockConfiguration>());
     addEntry("time", std::make_shared<S_ColorConfiguration>());
-    addEntry("time", std::make_shared<S_BrightnessConfiguration>());
+    addEntry("brightness", std::make_shared<S_BrightnessConfiguration>());
     addEntry("time", std::make_shared<S_NetworkConfiguration>());
     _selectedEntry = 0;
+    _inSubMenu = false;
 }
 
 void S_Menu::Update() {
+
     HandleInput();
 
     Core::getInstance()->_ledManager->ClearPixels();
     DrawSidebar();
-
     DrawIcon();
+   
 }
 
 void S_Menu::addEntry(std::string iconName, std::shared_ptr<Screen> screen) {
@@ -33,13 +36,13 @@ void S_Menu::addEntry(std::string iconName, std::shared_ptr<Screen> screen) {
 }
 
 void S_Menu::HandleInput() {
-    if (Core::getInstance()->_inputManager->GetKeyDown(C_InputManager::UP)) {
+    if (Core::getInstance()->_inputManager->GetKeyDown(C_InputManager::DOWN)) {
         _selectedEntry++;
         if (_selectedEntry >= _entries.size()) {
             _selectedEntry = 0;
         }
     } else if (Core::getInstance()->_inputManager->GetKeyDown(
-                   C_InputManager::DOWN)) {
+                   C_InputManager::UP)) {
         _selectedEntry--;
         if (_selectedEntry > _entries.size()) {
             _selectedEntry = _entries.size() -1;
@@ -47,6 +50,9 @@ void S_Menu::HandleInput() {
     } else if (Core::getInstance()->_inputManager->GetKeyDown(
                    C_InputManager::CONFIRM)) {
         Core::getInstance()->MoveToScreen(_entries[_selectedEntry].screen);
+    }else if (Core::getInstance()->_inputManager->GetKeyDown(
+                   C_InputManager::MENU)) {
+        Core::getInstance()->MoveToScreen(std::make_shared<S_WordClock>());
     }
 }
 

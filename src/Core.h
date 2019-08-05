@@ -1,6 +1,5 @@
 #include <C_LedManager.h>
 #include <C_WordManager.h>
-#include <NeoPixelBus.h>
 #include <Screen.h>
 #include <memory>
 #include <vector>
@@ -8,6 +7,7 @@
 #include <C_InputManager.h>
 #include <C_IconManager.h>
 #include <C_EepromManager.h>
+#include <NeoPixelBrightnessBus.h>
 
 #ifndef CORE_H
 #define CORE_H
@@ -23,7 +23,7 @@ class Core {
     std::shared_ptr<C_InputManager> _inputManager;
     std::shared_ptr<C_IconManager> _iconManager;
     std::shared_ptr<C_EepromManager> _eepromManager;
-    std::shared_ptr<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>> _strip;
+    std::shared_ptr<NeoPixelBrightnessBus<NeoGrbFeature, Neo800KbpsMethod>> _strip;
     static Core* getInstance();
    private:
     static Core* instance;

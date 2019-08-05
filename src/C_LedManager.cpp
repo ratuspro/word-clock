@@ -2,8 +2,9 @@
 #include <Core.h>
 #include <EEPROM.h>
 #include <config.h>
+#include <NeoPixelBrightnessBus.h>
 
-C_LedManager::C_LedManager(std::shared_ptr<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>> strip)
+C_LedManager::C_LedManager(std::shared_ptr<NeoPixelBrightnessBus<NeoGrbFeature, Neo800KbpsMethod>> strip)
     : Component(),
       _matrixStrip(SCREEN_WIDTH, SCREEN_HEIGHT),
       _leds_dirty(false) {

@@ -28,7 +28,7 @@ Core::Core() {
     }
 
     // Init Strip
-    _strip = std::make_shared<NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod>>(
+    _strip = std::make_shared<NeoPixelBrightnessBus<NeoGrbFeature, Neo800KbpsMethod>>(
         NUM_LEDS, LEDS_PIN);
     _strip->Begin();
 
@@ -59,6 +59,9 @@ Core::Core() {
     Serial.println("Created EEPROM MANAGER");
     _eepromManager = std::make_shared<C_EepromManager>();
     
+    // Set Brightness with saved value
+    _strip->SetBrightness(_eepromManager->GetBrightness());
+
     // Start Screen
     Core::MoveToScreen(std::make_shared<S_StartingScreen>());
 
@@ -67,6 +70,7 @@ Core::Core() {
 Core::~Core() {}
 
 void Core::Update() {
+    Serial.println(_eepromManager->GetBrightness());
     _currentScreen->Update();
     _ledManager->Update();
     _inputManager->Update();
