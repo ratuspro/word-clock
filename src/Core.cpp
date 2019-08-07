@@ -74,7 +74,6 @@ Core::Core() {
 Core::~Core() {}
 
 void Core::Update() {
-    Serial.println(_eepromManager->GetBrightness());
     _currentScreen->Update();
     _ledManager->Update();
     _inputManager->Update();
