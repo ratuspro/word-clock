@@ -4,21 +4,27 @@
 #include <S_ColorConfiguration.h>
 #include <S_Menu.h>
 
-S_ColorConfiguration::S_ColorConfiguration() {
-    RgbColor color = Core::getInstance()->_eepromManager->GetForegroundColor();
-    for (uint8_t i = 0; i < _colorsPalette.size(); i++)
-    {
-        if(color == _colorsPalette[i]){
-            _indexPalette = i;
-        }
-    }
-    
-}
+S_ColorConfiguration::S_ColorConfiguration(Screen_Menu::MENU_STAGE stage)
+    : Screen_Menu(stage), _indexPalette(99) {}
 
 void S_ColorConfiguration::Update() {
-    HandleInput();
-    Core::getInstance()->_ledManager->ClearPixels();
-    Core::getInstance()->_ledManager->SetPixel(5, 5, _colorsPalette[_indexPalette]);
+    if (_indexPalette == 99) {
+        RgbColor color =
+            Core::getInstance()->_eepromManager->GetForegroundColor();
+        for (uint8_t i = 0; i < _colorsPalette.size(); i++) {
+            if (color == _colorsPalette[i]) {
+                _indexPalette = i;
+            }
+        }
+    }
+
+    if (CurrentStage == MENU_STAGE::ICON) {
+    } else {
+        HandleInput();
+        Core::getInstance()->_ledManager->ClearPixels();
+        Core::getInstance()->_ledManager->SetPixel(
+            5, 5, _colorsPalette[_indexPalette]);
+    }
 }
 
 void S_ColorConfiguration::HandleInput() {
@@ -31,14 +37,15 @@ void S_ColorConfiguration::HandleInput() {
     } else if (Core::getInstance()->_inputManager->GetKeyDown(
                    C_InputManager::DOWN)) {
         if (_indexPalette - 1 < 0) {
-            _indexPalette = _colorsPalette.size()-1;
+            _indexPalette = _colorsPalette.size() - 1;
         } else {
             _indexPalette--;
         }
 
     } else if (Core::getInstance()->_inputManager->GetKeyDown(
                    C_InputManager::CONFIRM)) {
-        Core::getInstance()->_eepromManager->SetForegroundColor(_colorsPalette[_indexPalette]);
+        Core::getInstance()->_eepromManager->SetForegroundColor(
+            _colorsPalette[_indexPalette]);
         Core::getInstance()->MoveToScreen(std::make_shared<S_Menu>());
 
     } else if (Core::getInstance()->_inputManager->GetKeyDown(

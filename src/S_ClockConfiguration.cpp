@@ -4,49 +4,56 @@
 #include <errno.h>
 #include <sys/time.h>
 
-S_ClockConfiguration::S_ClockConfiguration() {
+S_ClockConfiguration::S_ClockConfiguration(Screen_Menu::MENU_STAGE stage = Screen_Menu::ICON) : Screen_Menu(stage) {
     _currentMode = CHANGING_HOURS;
     _ticksToChange = 60;
     _filled = true;
-    _ledManager = Core::getInstance()->_ledManager;
-    _inputManager = Core::getInstance()->_inputManager;
 
     struct tm now;
     getLocalTime(&now, 0);
     _hour = now.tm_hour;
     _minute = now.tm_min;
-
 }
 
 void S_ClockConfiguration::Update() {
-    HandleInput();
+    if (CurrentStage == MENU_STAGE::ICON) {
+        
+    } else {
+        HandleInput();
 
-    // Clear all pixels
-    _ledManager->ClearPixels();
+        // Clear all pixels
+        Core::getInstance()->_ledManager->ClearPixels();
 
-    // Fill entire time
-    _ledManager->SetPixels(Core::getInstance()->_wordManager->ConvertTimeToPixels(_hour, _minute), Core::getInstance()->_eepromManager->GetForegroundColor());
+        // Fill entire time
+        Core::getInstance()->_ledManager->SetPixels(
+            Core::getInstance()->_wordManager->ConvertTimeToPixels(_hour,
+                                                                   _minute),
+            Core::getInstance()->_eepromManager->GetForegroundColor());
 
-    // Blink relevant component
-    if (!_filled) {
-        if (_currentMode == CHANGING_MINUTES) {
-            _ledManager->SetPixels(Core::getInstance()->_wordManager->ConvertMinutesToPixels(_minute),
-                                   RgbColor(0, 0, 0));
-        } else {
-            _ledManager->SetPixels(
-                Core::getInstance()->_wordManager->ConvertHoursToPixels(_hour, _minute > 30),
-                RgbColor(0, 0, 0));
+        // Blink relevant component
+        if (!_filled) {
+            if (_currentMode == CHANGING_MINUTES) {
+                Core::getInstance()->_ledManager->SetPixels(
+                    Core::getInstance()->_wordManager->ConvertMinutesToPixels(
+                        _minute),
+                    RgbColor(0, 0, 0));
+            } else {
+                Core::getInstance()->_ledManager->SetPixels(
+                    Core::getInstance()->_wordManager->ConvertHoursToPixels(
+                        _hour, _minute > 30),
+                    RgbColor(0, 0, 0));
+            }
         }
-    }
 
-    // Update Timer
-    if (--_ticksToChange == 0) {
-        ResetTimer(!_filled);
+        // Update Timer
+        if (--_ticksToChange == 0) {
+            ResetTimer(!_filled);
+        }
     }
 }
 
 void S_ClockConfiguration::HandleInput() {
-    if (_inputManager->GetKeyDown(C_InputManager::UP)) {
+    if (Core::getInstance()->_inputManager->GetKeyDown(C_InputManager::UP)) {
         if (_currentMode == CHANGING_HOURS) {
             _hour = _hour + 1;
             if (_hour >= 12) {
@@ -60,7 +67,7 @@ void S_ClockConfiguration::HandleInput() {
         }
         ResetTimer(true);
     }
-    if (_inputManager->GetKeyDown(C_InputManager::DOWN)) {
+    if (Core::getInstance()->_inputManager->GetKeyDown(C_InputManager::DOWN)) {
         if (_currentMode == CHANGING_HOURS) {
             _hour = _hour - 1;
             if (_hour < 0) {
@@ -75,7 +82,7 @@ void S_ClockConfiguration::HandleInput() {
         ResetTimer(true);
     }
 
-    if (_inputManager->GetKeyDown(C_InputManager::CONFIRM)) {
+    if (Core::getInstance()->_inputManager->GetKeyDown(C_InputManager::CONFIRM)) {
         if (_currentMode == CHANGING_HOURS) {
             _currentMode = CHANGING_MINUTES;
             ResetTimer(true);

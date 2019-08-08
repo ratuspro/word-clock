@@ -9,6 +9,8 @@
 #include <WiFiUdp.h>
 #include <sys/time.h>
 #include <memory>
+#include <Screen_Menu.h>
+
 S_StartingScreen::S_StartingScreen() {
     // Animation
     _numberOfFades = 0;
@@ -23,7 +25,7 @@ void S_StartingScreen::Update() {
     // Ignore network connection
     if (Core::getInstance()->_inputManager->GetKeyDown(C_InputManager::MENU)) {
         Core::getInstance()->MoveToScreen(
-            std::make_shared<S_ClockConfiguration>());
+            std::make_shared<S_ClockConfiguration>(Screen_Menu::MENU_STAGE::IN_CONFIGURATION));
         return;
     }
 
@@ -42,7 +44,7 @@ void S_StartingScreen::Update() {
                 NETWORK_NUM_ATTEMPTS_PER_CYCLE * NETWORK_NUM_CYCLES) {
                 // Reached the max attempts, move to manual configuration
                 Core::getInstance()->MoveToScreen(
-                    std::make_shared<S_ClockConfiguration>());
+                    std::make_shared<S_ClockConfiguration>(Screen_Menu::MENU_STAGE::IN_CONFIGURATION));
             }
         } else {
             // WiFi is connection, get the time from the NTPClient

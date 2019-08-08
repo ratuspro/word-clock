@@ -7,7 +7,7 @@
 
 void S_WordClock::HandleInput(){
     if(Core::getInstance()->_inputManager->GetKeyDown(C_InputManager::MENU)){
-        Core::getInstance()->MoveToScreen(std::make_shared<S_Menu>());
+        Core::getInstance()->MoveToScreen(Core::getInstance()->_menu);
     }
 }
 

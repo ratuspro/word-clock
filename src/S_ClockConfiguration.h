@@ -1,15 +1,16 @@
-#include <Screen.h>
+#include <Screen_Menu.h>
 #include <time.h>
 #include <C_LedManager.h>
 #include <C_InputManager.h>
 
-class S_ClockConfiguration : public Screen {
+#ifndef S_CLOCKCONFIGURATION_H
+#define S_CLOCKCONFIGURATION_H
+
+class S_ClockConfiguration : public Screen_Menu {
     public:
-        S_ClockConfiguration();
+        S_ClockConfiguration(Screen_Menu::MENU_STAGE stage);
         void Update();
     private:
-        std::shared_ptr<C_InputManager> _inputManager;
-        std::shared_ptr<C_LedManager> _ledManager;
         void HandleInput();
         void SetMachineClock();
         enum Mode {CHANGING_HOURS, CHANGING_MINUTES};
@@ -22,3 +23,5 @@ class S_ClockConfiguration : public Screen {
         uint8_t _ticksToChange;
 
 };
+
+#endif

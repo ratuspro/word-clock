@@ -7,6 +7,7 @@
 #include <Screen.h>
 #include <config.h>
 #include <vector>
+#include <S_Menu.h>
 
 Core* Core::instance = 0;
 
@@ -51,14 +52,6 @@ Core::Core() {
     Serial.println("Created Network Manager");
     _networkManager = std::make_shared<C_NetworkManager>();
 
-    // Add Icon Manager
-    Serial.println("Created Icon Manager");
-    _iconManager = std::make_shared<C_IconManager>();
-    _iconManager->AddIcon("time", Icon());
-    _iconManager->AddIcon("color", Icon());
-    _iconManager->AddIcon("brightness", Icon());
-    _iconManager->AddIcon("network", Icon());
-
     // Add EEPROM Manager
     Serial.println("Created EEPROM MANAGER");
     _eepromManager = std::make_shared<C_EepromManager>();
@@ -66,6 +59,8 @@ Core::Core() {
     // Set Brightness with saved value
     _strip->SetBrightness(_eepromManager->GetBrightness());
 
+    _menu =std::make_shared<S_Menu>();
+    
     // Start Screen
     Core::MoveToScreen(std::make_shared<S_StartingScreen>());
 

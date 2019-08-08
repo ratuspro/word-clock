@@ -1,13 +1,14 @@
-#include <Screen.h>
+#include <Screen_Menu.h>
+#include <vector>
+#include <C_LedManager.h>
 
-class S_ColorConfiguration : public Screen {
+#ifndef S_COLORCONFIGURATION_H
+#define S_COLORCONFIGURATION_H
+
+class S_ColorConfiguration : public Screen_Menu {
    public:
-    S_ColorConfiguration();
+    S_ColorConfiguration(Screen_Menu::MENU_STAGE stage = Screen_Menu::MENU_STAGE::ICON);
     void Update();
-
-   private:
-    void HandleInput();
-    uint8_t _indexPalette = 0;
     std::vector<RgbColor> _colorsPalette = {
         RgbColor(244, 67, 54),  RgbColor(233, 30, 99),  RgbColor(156, 39, 176),
         RgbColor(103, 58, 183), RgbColor(63, 81, 181),  RgbColor(33, 150, 243),
@@ -16,4 +17,10 @@ class S_ColorConfiguration : public Screen {
         RgbColor(255, 235, 59), RgbColor(255, 193, 7),  RgbColor(255, 152, 0),
         RgbColor(255, 87, 34),  RgbColor(121, 85, 72),  RgbColor(158, 158, 158),
         RgbColor(96, 125, 139), RgbColor(255, 255, 255)};
+   private:
+    void HandleInput();
+    uint8_t _indexPalette = 0;
+    
 };
+
+#endif

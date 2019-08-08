@@ -2,6 +2,9 @@
 #include <config.h>
 #include <bitset>
 
+#ifndef S_WORDCLOCK_H
+#define S_WORDCLOCK_H
+
 class S_WordClock : public Screen {
    public:
     void Update();
@@ -9,3 +12,5 @@ class S_WordClock : public Screen {
    private:
     bool _timeSet;
 };
+
+#endif

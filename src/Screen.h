@@ -1,6 +1,8 @@
 #include <Component.h>
+
 #ifndef SCREEN_H
 #define SCREEN_H
+
 class Screen : Component {
    public:
     enum State { RUNNING, STOPPED };

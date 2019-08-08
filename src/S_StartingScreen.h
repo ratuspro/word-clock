@@ -3,6 +3,9 @@
 #include <bitset>
 #include <memory>
 
+#ifndef S_STRATINGSCREEN_H
+#define S_STRATINGSCREEN_H
+
 class S_StartingScreen : public Screen {
    public:
     S_StartingScreen();
@@ -25,3 +28,5 @@ class S_StartingScreen : public Screen {
     clock_t _lastAttempt;
 
 };
+
+#endif
