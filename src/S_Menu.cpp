@@ -8,7 +8,7 @@
 #include <config.h>
 
 S_Menu::S_Menu() {
-    addEntry("time", std::make_shared<S_ClockConfiguration>(Screen_Menu::ICON));
+    addEntry("time", std::make_shared<S_ClockConfiguration>(false, Screen_Menu::ICON));
     addEntry("color",
              std::make_shared<S_ColorConfiguration>(Screen_Menu::ICON));
     addEntry("brightness",

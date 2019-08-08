@@ -17,21 +17,22 @@ std::vector<std::vector<LedCoord>> _bardsCoord = {
     {{7, 2}, {7, 3}, {7, 4}, {7, 5}, {7, 6}, {7, 7}},
     {{8, 3}, {8, 4}, {8, 5}, {8, 6}}};
 
-S_BrightnessConfiguration::S_BrightnessConfiguration (
+S_BrightnessConfiguration::S_BrightnessConfiguration(
     Screen_Menu::MENU_STAGE stage)
-    : Screen_Menu(stage), _brightness(0) {
-    
-}
+    : Screen_Menu(stage), _brightness(0), _referenceColor(0, 0, 0) {}
 
 void S_BrightnessConfiguration::Update() {
-    if(_brightness == 0){ _brightness = Core::getInstance()->_eepromManager->GetBrightness();}
+    if (_brightness == 0) {
+        _brightness = Core::getInstance()->_eepromManager->GetBrightness();
+    }
+    _referenceColor = Core::getInstance()->_eepromManager->GetForegroundColor();
     if (CurrentStage == MENU_STAGE::ICON) {
-        DrawCircle();
-        DrawBars(128); //Half Circle
+        DrawCircle(RgbColor(255, 255, 255));
+        DrawBars(128,_referenceColor);  // Half Circle
     } else {
         HandleInput();
-        DrawCircle();
-        DrawBars(_brightness);
+        DrawCircle(_referenceColor);
+        DrawBars(_brightness,RgbColor(255, 255, 255));
     }
 }
 
@@ -56,50 +57,44 @@ void S_BrightnessConfiguration::HandleInput() {
     } else if (Core::getInstance()->_inputManager->GetKeyDown(
                    C_InputManager::CONFIRM)) {
         Core::getInstance()->_eepromManager->SetBrightness(_brightness);
-        CurrentStage = ICON;
-        Core::getInstance()->_menu->_inSubMenu = false;
+        ExitScreen();
 
     } else if (Core::getInstance()->_inputManager->GetKeyDown(
                    C_InputManager::MENU)) {
         _brightness = Core::getInstance()->_eepromManager->GetBrightness();
         Core::getInstance()->_eepromManager->SetBrightness(_brightness);
         Core::getInstance()->_strip->SetBrightness(_brightness);
-        CurrentStage = ICON;
-        Core::getInstance()->_menu->_inSubMenu = false;
+        ExitScreen();
     }
 }
 
-void S_BrightnessConfiguration::DrawCircle() {
+void S_BrightnessConfiguration::DrawCircle(RgbColor color) {
     for (uint8_t i = 0; i < _circleCoord.size(); i++) {
-        Core::getInstance()->_ledManager->SetPixel(_circleCoord[i],
-                                                   RgbColor(255, 255, 255));
+        Core::getInstance()->_ledManager->SetPixel(_circleCoord[i], color);
     }
 }
 
-void S_BrightnessConfiguration::DrawBars(uint8_t brightness) {
-
-    //How many bars
-    uint8_t level = (brightness - 5) / 7; // [0,35]
-    uint8_t bars = level / 6 ; // [0,5]
+void S_BrightnessConfiguration::DrawBars(uint8_t brightness, RgbColor color) {
+    // How many bars
+    uint8_t level = (brightness - 5) / 7;  // [0,35]
+    uint8_t bars = level / 6;              // [0,5]
     uint8_t intensity = level % 6;
 
-    Serial.print(brightness);
-    Serial.print(" : ");
-    Serial.print(level);
-    Serial.print(" : ");
-    Serial.print(intensity);
-    Serial.print(" : ");
-    Serial.println(bars);
-
-    for(uint8_t i = 0; i <= bars; i++){
-        uint8_t colorIntensity; 
-        if(i != bars){
-            colorIntensity = 255;
-        }else{
-            colorIntensity = intensity * 255 / 6;
+    uint8_t colorBrightness = color.CalculateBrightness();
+    RgbColor refColor;
+    for (uint8_t i = 0; i <= bars; i++) {
+        uint8_t colorDelta;
+        if (i != bars) {
+            colorDelta = colorBrightness;
+        } else {
+            colorDelta = intensity * colorBrightness / 6;
         }
-        for(uint8_t led = 0; led < _bardsCoord[i].size(); led++){
-            Core::getInstance()->_ledManager->SetPixel(_bardsCoord[i][led],RgbColor(colorIntensity,colorIntensity,colorIntensity));
+        refColor = color;
+        color.Darken(colorBrightness - colorDelta);
+        for (uint8_t led = 0; led < _bardsCoord[i].size(); led++) {
+            Core::getInstance()->_ledManager->SetPixel(
+                _bardsCoord[i][led],
+                color);
         }
     }
 }

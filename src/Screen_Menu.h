@@ -8,6 +8,8 @@ class Screen_Menu : public Screen{
         enum MENU_STAGE { ICON, IN_CONFIGURATION};
         MENU_STAGE CurrentStage;
         Screen_Menu(MENU_STAGE newStage) : CurrentStage(newStage) {};
+        void ExitScreen();
+
 };
 
 #endif

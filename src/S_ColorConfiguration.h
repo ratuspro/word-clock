@@ -1,26 +1,29 @@
+#include <C_LedManager.h>
 #include <Screen_Menu.h>
 #include <vector>
-#include <C_LedManager.h>
 
 #ifndef S_COLORCONFIGURATION_H
 #define S_COLORCONFIGURATION_H
 
 class S_ColorConfiguration : public Screen_Menu {
    public:
-    S_ColorConfiguration(Screen_Menu::MENU_STAGE stage = Screen_Menu::MENU_STAGE::ICON);
+    S_ColorConfiguration(
+        Screen_Menu::MENU_STAGE stage = Screen_Menu::MENU_STAGE::ICON);
     void Update();
     std::vector<RgbColor> _colorsPalette = {
-        RgbColor(244, 67, 54),  RgbColor(233, 30, 99),  RgbColor(156, 39, 176),
-        RgbColor(103, 58, 183), RgbColor(63, 81, 181),  RgbColor(33, 150, 243),
-        RgbColor(3, 169, 244),  RgbColor(0, 188, 212),  RgbColor(0, 150, 136),
-        RgbColor(76, 175, 80),  RgbColor(139, 195, 74), RgbColor(205, 220, 57),
-        RgbColor(255, 235, 59), RgbColor(255, 193, 7),  RgbColor(255, 152, 0),
-        RgbColor(255, 87, 34),  RgbColor(121, 85, 72),  RgbColor(158, 158, 158),
-        RgbColor(96, 125, 139), RgbColor(255, 255, 255)};
+        RgbColor(254, 0, 177),RgbColor(252, 14, 52),RgbColor(255, 207, 9),
+        RgbColor(0, 255, 198),RgbColor(15, 240, 255), RgbColor(204, 255, 0),
+        RgbColor(102, 0, 255),RgbColor(255, 100, 0), RgbColor(8, 255, 8),
+        RgbColor(230, 0, 0),RgbColor(57, 255, 20), RgbColor(63, 0, 255),
+        RgbColor(254, 20, 147), RgbColor(176, 5, 75), RgbColor(254, 68, 0),
+        RgbColor(207, 255, 4), RgbColor(255, 0, 0), RgbColor(0, 255, 0), 
+        RgbColor(0, 0, 255), RgbColor(255, 255, 255)};
+
    private:
     void HandleInput();
     uint8_t _indexPalette = 0;
-    
+    void DrawBrush(RgbColor color);
+    void DrawHandle(bool colored);
 };
 
 #endif

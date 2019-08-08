@@ -4,11 +4,25 @@
 #include <errno.h>
 #include <sys/time.h>
 
-S_ClockConfiguration::S_ClockConfiguration(Screen_Menu::MENU_STAGE stage = Screen_Menu::ICON) : Screen_Menu(stage) {
+std::vector<LedCoord> _watchFrame = {
+    {3, 1},{4, 1},{5, 1},{6, 1},{7, 1},
+    {2, 2},{3, 2},{7, 2},{8, 2},
+    {2, 3},{8, 3},
+    {2, 4},{8, 4},
+    {2, 5},{8, 5},
+    {2, 6},{8, 6},
+    {2, 7},{3, 7},{7, 7},{8, 7},
+    {3, 8},{4, 8},{5, 8},{6, 8},{7, 8}};
+
+std::vector<LedCoord> _watchHands = {{5, 2},{5, 3},{5, 4},{6, 4}};
+
+std::vector<LedCoord> _watchWheels = {{9, 4},{9, 5}};
+
+S_ClockConfiguration::S_ClockConfiguration(bool initialConfig, Screen_Menu::MENU_STAGE stage = Screen_Menu::ICON) : Screen_Menu(stage) {
     _currentMode = CHANGING_HOURS;
     _ticksToChange = 60;
     _filled = true;
-
+    _initialConfig = initialConfig;
     struct tm now;
     getLocalTime(&now, 0);
     _hour = now.tm_hour;
@@ -17,7 +31,9 @@ S_ClockConfiguration::S_ClockConfiguration(Screen_Menu::MENU_STAGE stage = Scree
 
 void S_ClockConfiguration::Update() {
     if (CurrentStage == MENU_STAGE::ICON) {
-        
+        DrawFrame(RgbColor(255,255,255));
+        DrawHands(Core::getInstance()->_eepromManager->GetForegroundColor());
+        DrawWheel(Core::getInstance()->_eepromManager->GetForegroundColor());
     } else {
         HandleInput();
 
@@ -88,7 +104,13 @@ void S_ClockConfiguration::HandleInput() {
             ResetTimer(true);
         } else if (_currentMode == CHANGING_MINUTES) {
             SetMachineClock();
-            Core::getInstance()->MoveToScreen(std::make_shared<S_WordClock>());
+            if(_initialConfig){
+                _currentMode = CHANGING_HOURS;
+                Core::getInstance()->MoveToScreen(std::make_shared<S_WordClock>());
+            }else{
+                _currentMode = CHANGING_HOURS;
+                ExitScreen();
+            }
         }
     }
 }
@@ -108,4 +130,16 @@ void S_ClockConfiguration::ResetTimer(bool isFilled) {
         _ticksToChange = 60;
     }
     _filled = isFilled;
+}
+
+void S_ClockConfiguration::DrawFrame(RgbColor color){
+    Core::getInstance()->_ledManager->SetPixels(_watchFrame,color);
+}
+
+void S_ClockConfiguration::DrawHands(RgbColor color){
+    Core::getInstance()->_ledManager->SetPixels(_watchHands,color);
+}
+
+void S_ClockConfiguration::DrawWheel(RgbColor color){
+    Core::getInstance()->_ledManager->SetPixels(_watchWheels,color);
 }

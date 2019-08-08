@@ -11,8 +11,9 @@ class S_BrightnessConfiguration : public Screen_Menu {
 
    private:
     uint8_t _brightness;
-    void DrawCircle();
-    void DrawBars(uint8_t brightness);
+    RgbColor _referenceColor;
+    void DrawCircle(RgbColor color);
+    void DrawBars(uint8_t brightness, RgbColor color);
 };
 
 #endif

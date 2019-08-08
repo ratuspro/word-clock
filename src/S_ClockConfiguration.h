@@ -8,7 +8,7 @@
 
 class S_ClockConfiguration : public Screen_Menu {
     public:
-        S_ClockConfiguration(Screen_Menu::MENU_STAGE stage);
+        S_ClockConfiguration(bool initialConfig, Screen_Menu::MENU_STAGE stage);
         void Update();
     private:
         void HandleInput();
@@ -17,10 +17,13 @@ class S_ClockConfiguration : public Screen_Menu {
         Mode _currentMode;
         int8_t _hour;
         int8_t _minute;
-        
+        bool _initialConfig;
         void ResetTimer(bool isFilled);
         bool _filled;
         uint8_t _ticksToChange;
+        void DrawFrame(RgbColor color);
+        void DrawHands(RgbColor color);
+        void DrawWheel(RgbColor color);
 
 };
 
